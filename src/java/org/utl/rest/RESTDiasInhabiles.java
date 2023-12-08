@@ -65,7 +65,7 @@ public class RESTDiasInhabiles {
     @POST
     @Path("getDiasPorFormatoLista")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("datosDiaInhabiles") @DefaultValue("") String datosDiaInhabiles) {
+    public Response getDiasPorFormatoLista(@FormParam("datosDiaInhabiles") @DefaultValue("") String datosDiaInhabiles) {
         String out = null;
         Gson gson = new Gson();
         DiaInhabil diaInhabil = null;

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.utl.rest;
 
 import com.google.gson.Gson;
@@ -16,10 +12,6 @@ import org.utl.controller.ControllerMateria;
 import org.utl.model.Grupo;
 import org.utl.model.Materia;
 
-/**
- *
- * @author DaniV
- */
 @Path("materia")
 public class RESTMateria {
 

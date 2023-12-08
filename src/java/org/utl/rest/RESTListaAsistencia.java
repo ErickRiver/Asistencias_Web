@@ -7,9 +7,11 @@ package org.utl.rest;
 import com.google.gson.Gson;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
@@ -47,12 +49,87 @@ public class RESTListaAsistencia {
     @POST
     @Path("getAll")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("datosLista") @DefaultValue("") String datosLista) {
+    public Response getAll() {
         String out = null;
         Gson gson = new Gson();
         ControllerListaAsistencia cla = new ControllerListaAsistencia();
         try {
             List<ListaAsistencia> listaFormatos = cla.getAll();
+            out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @POST
+    @Path("getVistaLista")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVistaLista() {
+        String out = null;
+        Gson gson = new Gson();
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            List<ListaAsistencia> listaFormatos = cla.getVistaLista();
+            out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @GET
+    @Path("getVistaListaPorSemana")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVistaListaPorSemana(@QueryParam("semana") @DefaultValue("0") int semana) {
+        String out = null;
+        Gson gson = new Gson();
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            List<ListaAsistencia> listaFormatos = cla.getVistaListaPorSemana(semana);
+            out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @GET
+    @Path("getVistaListaPorSemanaYmateria")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVistaListaPorSemanaYmateria(@QueryParam("semana") @DefaultValue("0") int semana,
+                                                   @QueryParam("idMateria") @DefaultValue("0") int idMateria) {
+        String out = null;
+        Gson gson = new Gson();
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            List<ListaAsistencia> listaFormatos = cla.getVistaListaPorSemanaYmateria(semana, idMateria);
+            out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+    
+    @GET
+    @Path("getVistaListaPorSemanaYmateriaYgrupo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVistaListaPorSemanaYmateriaYgrupo(@QueryParam("semana") @DefaultValue("0") int semana,
+                                                   @QueryParam("idMateria") @DefaultValue("0") int idMateria,
+                                                   @QueryParam("idGrupo") @DefaultValue("0") int idGrupo) {
+        String out = null;
+        Gson gson = new Gson();
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            List<ListaAsistencia> listaFormatos = cla.getVistaListaPorSemanaYmateriaYgrupo(semana, idMateria, idGrupo);
             out = gson.toJson(listaFormatos);
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,4 +159,25 @@ public class RESTListaAsistencia {
 
         return Response.status(Response.Status.OK).entity(out).build();
     }
+
+    @GET
+    @Path("getListaSemanas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getListaPorSemana(@QueryParam("semana") @DefaultValue("0") int semana) {
+        String out = null;
+        Gson gson = new Gson();
+        ListaAsistencia listaAsistencia = null;
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            //listaAsistencia = gson.fromJson(datosLista, ListaAsistencia.class);
+            List<ListaAsistencia> listaFormatos = cla.getListaPorSemana(semana);
+            out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
 }

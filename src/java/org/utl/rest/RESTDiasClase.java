@@ -47,7 +47,7 @@ public class RESTDiasClase {
     @POST
     @Path("getDiasPorFormatoLista")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("datosDiasClase") @DefaultValue("") String datosDiasClase) {
+    public Response getDiasPorFormatoLista(@FormParam("datosDiasClase") @DefaultValue("") String datosDiasClase) {
         String out = null;
         Gson gson = new Gson();
         DiaClase diaClase = null;

@@ -47,7 +47,7 @@ public class RESTHorario {
     @POST
     @Path("getAllFiltro")
     @Produces(MediaType.APPLICATION_JSON)
-        public Response getAll(@FormParam("datosHorario") @DefaultValue("") String datosHorario) {
+        public Response getAllFiltro(@FormParam("datosHorario") @DefaultValue("") String datosHorario) {
         String out = null;
         Gson gson = new Gson();
         Horario horario = null;

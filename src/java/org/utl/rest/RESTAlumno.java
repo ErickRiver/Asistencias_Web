@@ -50,7 +50,7 @@ public class RESTAlumno {
     @POST
     @Path("getAlumnoOGrupo")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("idGrupo") @DefaultValue("0") int idGrupo,
+    public Response getAlumnoOGrupo(@FormParam("idGrupo") @DefaultValue("0") int idGrupo,
                            @FormParam("idUsuario") @DefaultValue("0") int idUsuario) {
         String out = null;
         Gson gson = new Gson();
@@ -72,7 +72,7 @@ public class RESTAlumno {
     @POST
     @Path("getAlumnosGrupo")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("idGrupo") @DefaultValue("0") int idGrupo) {
+    public Response getAlumnosGrupo(@FormParam("idGrupo") @DefaultValue("0") int idGrupo) {
         String out = null;
         Gson gson = new Gson();
         Grupo alumno = null;

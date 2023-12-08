@@ -29,7 +29,7 @@ public class RESTDirectivo {
     @POST
     @Path("getDirectivo")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("idUsuario") @DefaultValue("0") int idUsuario){
+    public Response getDirectivo(@FormParam("idUsuario") @DefaultValue("0") int idUsuario){
         String out = null;
         Gson gson = new Gson();
         

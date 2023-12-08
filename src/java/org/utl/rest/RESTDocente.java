@@ -31,7 +31,7 @@ public class RESTDocente {
     @POST
     @Path("getDocente")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll(@FormParam("idUsuario") @DefaultValue("0") int idUsuario) {
+    public Response getDocente(@FormParam("idUsuario") @DefaultValue("0") int idUsuario) {
         String out = null;
         Gson gson = new Gson();
         ControllerDocente cd = new ControllerDocente();
