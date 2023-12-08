@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Listas</title>
+</head>
+
+<body>
+    <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+
+    <div class="navbar">
+        <a href="../../index.html">
+            <div class="logo">
+                <img src="../../img/logo.png" alt="logo">
+            </div>
+        </a>
+
+        <div class="menu">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="../asistencias/consulta.html">Consultar Asistencias</a>
+                    <a href="../asistencias/registrar.html">Registrar Asistencias</a>
+                </div>
+            </div>
+            <a href="../reportes/generarReporte.html">Reportes</a>
+            <a href="../listas/listas.html">Listas</a>
+            <a href="#" class="ultimo-item">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+
+    <h1 class="titulo">Generación de listas</h1>
+    <div class="contenedor">
+        <div class="contenedor-cmb">
+            <select id="cmbGrupo" name="cmbGrupo" title="Seleccione Grupo">
+                <option value="" selected disabled>Grupo</option>
+                <!-- Resto de opciones para el combo de Grupo -->
+            </select>
+
+            <select id="cmbDocente" name="cmbDocente" title="Seleccione Docente">
+                <option value="" selected disabled>Docente</option>
+                <!-- Resto de opciones para el combo de Docente -->
+            </select>
+
+            <select id="cmbMateria" name="cmbMateria" title="Seleccione Materia">
+                <option value="" selected disabled>Materia</option>
+                <!-- Resto de opciones para el combo de Materia -->
+            </select>
+
+            <select id="cmbDiasInhabiles" name="cmbDiasInhabiles" title="Seleccione Días Inhábiles">
+                <option value="" selected disabled>Días Inhábiles</option>
+                <!-- Resto de opciones para el combo de Días Inhábiles -->
+            </select>
+        </div>
+
+        <div class="contenedor-cmb">
+            <select id="cmbDiasClase" name="cmbDiasClase" title="Seleccione Días de Clase">
+                <option value="" selected disabled>Días de Clase</option>
+                <!-- Resto de opciones para el combo de Días de Clase -->
+            </select>
+
+            <select id="cmbHorasClase" name="cmbHorasClase" title="Seleccione Horas de Clase">
+                <option value="" selected disabled>Horas de Clase</option>
+                <!-- Resto de opciones para el combo de Horas de Clase -->
+            </select>
+
+            <select id="cmbSemanas" name="cmbSemanas" title="Seleccione Semanas">
+                <option value="" selected disabled>Semanas</option>
+                <!-- Resto de opciones para el combo de Semanas -->
+            </select>
+
+            <select id="cmbNomenclaturaAsistencia" name="cmbNomenclaturaAsistencia"
+                title="Seleccione Nomenclatura de Asistencia">
+                <option value="" selected disabled>Nomenclatura de Asistencia</option>
+                <!-- Resto de opciones para el combo de Nomenclatura de Asistencia -->
+            </select>
+        </div>
+
+        <button class="btn"><span>Generar lista <i class="fas fa-list-alt"></i></span></button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

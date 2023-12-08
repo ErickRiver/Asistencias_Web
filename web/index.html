@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Inicio</title>
+</head>
+
+<body>
+    <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+
+    <div class="navbar">
+        <a href="index.html">
+            <div class="logo">
+                <img src="img/logo.png" alt="logo">
+            </div>
+        </a>
+
+        <div class="menu">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="html/asistencias/consulta.html">Consultar Asistencias</a>
+                    <a href="html/asistencias/registrar.html">Registrar Asistencias</a>
+                </div>
+            </div>
+            <a href="html/reportes/generarReporte.html">Reportes</a>
+            <a href="html/listas/listas.html">Listas</a>
+            <a href="#">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+
+    <div class="contenedor-img animate__animated animate__zoomInDown">
+        <img src="img/logo.png" alt="">
+    </div>
+
+    <script src="js/script.js"></script>
+</body> 
+
+</html>

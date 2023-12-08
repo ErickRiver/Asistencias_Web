@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Registro</title>
+</head>
+
+<body>
+    <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+
+    <div class="navbar">
+        <a href="../../index.html">
+            <div class="logo">
+                <img src="../../img/logo.png" alt="logo">
+            </div>
+        </a>
+
+        <div class="menu">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="../asistencias/consulta.html">Consultar Asistencias</a>
+                    <a href="../asistencias/registrar.html">Registrar Asistencias</a>
+                </div>
+            </div>
+            <a href="../reportes/generarReporte.html">Reportes</a>
+            <a href="../listas/listas.html">Listas</a>
+            <a href="#" class="ultimo-item">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+
+    <h1 class="titulo">Registro de asistencia</h1>
+
+    <div class="slider">
+        <div class="slide">
+            <h2 class="titulo-secundario">Semana 1</h2>
+            <div class="contenedor">
+                <div class="contenedor-opciones">
+                    <div class="contenedor-boton">
+                        <button class="btn"><span>Guardar <i class="fas fa-save"></i></span></button>
+                    </div>
+
+                    <div class="contenedor-cmb">
+                        <select id="cmbGrupo" name="cmbGrupo" title="Grupos">
+                            <option>Grupo</option>
+                        </select>
+
+                        <select id="cmbMateria" name="cmbMateria" title="Materias">
+                            <option>Materia</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="contenedor-tabla">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Lunes: 5:10</th>
+                                <th>Lunes: 6:00</th>
+                                <th>Martes: 6:50</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nombre del alumno 1</td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre del alumno 2</td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre del alumno 3</td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <h2 class="titulo-secundario">Semana 2</h2>
+            <div class="contenedor">
+                <div class="contenedor-opciones">
+                    <div class="contenedor-boton">
+                        <button class="btn"><span>Guardar <i class="fas fa-save"></i></span></button>
+                    </div>
+
+                    <div class="contenedor-cmb">
+                        <select id="cmbGrupo" name="cmbGrupo" title="Grupos">
+                            <option>Grupo</option>
+                        </select>
+
+                        <select id="cmbMateria" name="cmbMateria" title="Materias">
+                            <option>Materia</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="contenedor-tabla">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Lunes: 5:10</th>
+                                <th>Lunes: 6:00</th>
+                                <th>Martes: 6:50</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nombre del alumno 1</td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre del alumno 2</td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre del alumno 3</td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="J">J</option>
+                                        <option value="A">A</option>
+                                        <option value="F">F</option>
+                                        <option value="R">R</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

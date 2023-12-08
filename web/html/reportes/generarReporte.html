@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Consulta</title>
+</head>
+
+<body>
+    <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+
+    <div class="navbar">
+        <a href="../../index.html">
+            <div class="logo">
+                <img src="../../img/logo.png" alt="logo">
+            </div>
+        </a>
+
+        <div class="menu">
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="../asistencias/consulta.html">Consultar Asistencias</a>
+                    <a href="../asistencias/registrar.html">Registrar Asistencias</a>
+                </div>
+            </div>
+            <a href="../reportes/generarReporte.html">Reportes</a>
+            <a href="../listas/listas.html">Listas</a>
+            <a href="#" class="ultimo-item">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+
+    <h1 class="titulo">Generación de reportes</h1>
+
+    <div class="contenedor">
+        <div class="contenedor-formulario">
+            <div class="input-container">
+                <input type="search" placeholder="Buscar alumno" />
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="contenedor-select">
+                <div class="contenedor-fecha">
+                    <label for="fechaInicio"><strong>Fecha de inicio</strong></label>
+                    <input type="date" id="dpFechaInicio" title="Fecha de inicio">
+                </div>
+
+                <div class="contenedor-fecha">
+                    <label for="fechaFin"><strong>Fecha fin</strong></label>
+                    <input type="date" id="dpFechaFin" title="Fecha fin">
+                </div>
+
+            </div>
+
+            <div class="contenedor-select">
+                <select name="materias" id="cmbMaterias" title="Materias">
+                    <option>Grupo</option>
+                    <option value="matematicas">Matemáticas</option>
+                    <option value="historia">Historia</option>
+                    <option value="ciencias">Ciencias</option>
+                </select>
+
+                <select name="grupos" id="cmbGrupos" title="Grupos">
+                    <option>Materia</option>
+                    <option value="grupoA">Grupo A</option>
+                    <option value="grupoB">Grupo B</option>
+                    <option value="grupoC">Grupo C</option>
+                </select>
+            </div>
+
+            <button class="btn" id="btnGenerarReporte"><span>Generar reporte<i class="fas fa-download"></i></span></button>
+        </div>
+
+
+        <div class="contenedor-tabla">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Asistencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2023-11-01</td>
+                        <td>F</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+                    <tr>
+                        <td>2023-11-02</td>
+                        <td>A</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
