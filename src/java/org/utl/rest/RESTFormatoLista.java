@@ -7,6 +7,7 @@ package org.utl.rest;
 import com.google.gson.Gson;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -80,6 +81,25 @@ public class RESTFormatoLista {
         try {
             List<FormatoLista> listaFormatos = cla.getAll();
             out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+        
+    @GET
+    @Path("getLastId")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLastId() {
+        String out = null;
+        Gson gson = new Gson();
+        FormatoLista formatoLista = null;
+        ControllerFormatoLista cla = new ControllerFormatoLista();
+        try {
+            formatoLista = cla.getLastId();
+            out = gson.toJson(formatoLista);
         } catch (Exception e) {
             e.printStackTrace();
             out = "{\"exception\":\"Error interno del servidor.\"}";

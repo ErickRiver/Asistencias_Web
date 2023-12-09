@@ -5,14 +5,14 @@ var listaSemana = [];
 var semana = 1;
 var idMateria;
 var idGrupo;
+
 inicializar();
 
 function inicializar() {
     getAllGrupos();
     getAllMaterias();
-    //getAllAlumnos();
     getVistaListaPorSemana();
-    //getListaAsistencia();
+    
     configureTableFilter(document.getElementById("txtBuscar"), document.getElementById("tablaAlumnos"));
 }
 
@@ -64,7 +64,6 @@ const btnSemanaPosterior = document.getElementById('btnSemanaPosterior');
 btnSemanaPosterior.addEventListener('click', function () {
     semanaPosterior();
 });
-
 
 const btnSemanaAnterior = document.getElementById('btnSemanaAnterior');
 btnSemanaAnterior.addEventListener('click', function () {
