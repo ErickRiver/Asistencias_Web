@@ -36,8 +36,8 @@ public class RESTDiasClase {
         ControllerDiaClase cdc = new ControllerDiaClase();
         try {
             diaClase = gson.fromJson(datosDiasClase, DiaClase.class);
-            cdc.insert(diaClase);
-            out = gson.toJson(diaClase);
+            int idDiaClase = cdc.insertAndGetID(diaClase);
+            out = gson.toJson(idDiaClase);
         } catch (Exception e) {
             e.printStackTrace();
             out = "{\"exception\":\"Error interno del servidor.\"}";

@@ -27,12 +27,12 @@
                 <div class="dropdown">
                     <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
                     <div class="dropdown-content">
-                        <a href="../asistencias/consulta.html">Consultar Asistencias</a>
-                        <a href="../asistencias/registrar.html">Registrar Asistencias</a>
+                        <a href="../asistencias/consulta.html" id="consultaAsistencias">Consultar Asistencias</a>
+                        <a href="../asistencias/registrar.html" id="registrarAsistencias">Registrar Asistencias</a>
                     </div>
                 </div>
-                <a href="../reportes/generarReporte.html">Reportes</a>
-                <a href="../listas/listas.html">Listas</a>
+                <a href="../reportes/generarReporte.html" id="reportesLink">Reportes</a>
+                <a href="../listas/listas.html" id="listasLink">Listas</a>
                 <a href="#" class="ultimo-item" onclick="cerrarSesion();">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
@@ -56,9 +56,19 @@
                 </select>
 
                 <input type="number" id="txtSemanas" name="txtSemanas" placeholder="Semanas" max="14" min="0" style="text-align: center;">
+
+                <input type="file" id="inputArchivo" accept=".csv" style="display: none;">
+                <button onclick="abrirBiblioteca()">Seleccionar archivo CSV</button>
+                <input type="text" id="nombreArchivo" readonly>
             </div>
 
             <div class="contenedor-cmb">
+                <select id="cmbPeriodo" name="cmbPeriodo" title="Seleccione un periodo">
+                    <option value="" selected disabled>Periodo</option>
+                    <option value="Septiembre - Diciembre">Septiembre - Diciembre</option>
+                    <option value="Enero - Abril">Enero -Abril</option>
+                    <option value="Mayo - Agosto">Mayo - Agosto</option>
+                </select>
                 <form style="margin: 20px;">
                     <fieldset>
                         <legend>Selecciona los días de clase:</legend>

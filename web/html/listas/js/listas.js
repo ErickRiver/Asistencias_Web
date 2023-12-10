@@ -1,3 +1,5 @@
+let alumnosExcel = [];
+
 inicializar();
 function inicializar() {
     getAllGrupos();
@@ -94,6 +96,53 @@ function llenarCmbDocente(data) {
     });
 }
 
+function saveAlumnosExcel() {
+    console.log("*********GUARDAR ALUMNOS******************");
+    alumnosExcel.forEach(alumno => {
+        //obtenerUltimoIdUsuario
+        //saveUsuario con usuarioUltimoIdUsuario + 1 y password 1234
+        //el insert devuelve idUsuario
+        //hacer lo mismo con grupo
+
+        let fechaNacimiento = alumno.fechaNacimiento;
+        if (fechaNacimiento == "\r") {
+            fechaNacimiento = "0000-00-00";
+        }
+        let jsonAlumno = {
+            "nombre": alumno.nombre,
+            "apellido": alumno.apellido,
+            "fechaNacimiento": fechaNacimiento,
+            "grupo": {
+                "idGrupo": document.getElementById('cmbGrupo').value
+            },
+            "usuario": {
+                "idUsuario": 10
+            }
+        };
+
+        datos = {
+            datosAlumno: JSON.stringify(jsonAlumno)
+        };
+
+        params = new URLSearchParams(datos);
+        fetch("../../api/Alumno/save?",
+                {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                    body: params
+                })
+                .then(response => {
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log("success");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+    });
+}
+
 function saveFormatoLista() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let algunCheckboxMarcado = false;
@@ -108,7 +157,11 @@ function saveFormatoLista() {
             document.getElementById("cmbMateria").value != "" &&
             document.getElementById("cmbDocente").value != "" &&
             document.getElementById("txtSemanas").value != "" &&
-            algunCheckboxMarcado == true) {
+            document.getElementById("cmbPeriodo").value != "" &&
+            algunCheckboxMarcado == true,
+            alumnosExcel.length != 0) {
+
+        saveAlumnosExcel();
 
         let formatoLista = {
             "grupo": {
@@ -121,6 +174,7 @@ function saveFormatoLista() {
                 "idDocente": document.getElementById("cmbDocente").value
             },
             "semanas": document.getElementById("txtSemanas").value,
+            "periodo": document.getElementById("cmbPeriodo").value, 
             "nomenclatura": 1
         };
         datos = {
@@ -156,13 +210,11 @@ let diasClases = [];
 
 function saveDiasClase() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
     checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
             diasClases.push(checkbox.value);
         }
     });
-
     fetch("../../api/formatoLista/getLastId", {
         method: "GET",
         headers: {'Content-Type': 'application/json'}
@@ -170,7 +222,6 @@ function saveDiasClase() {
             .then(response => response.json())
             .then(function (data) {
                 var idFM = data.idFormatoLista;
-
                 Promise.all(diasClases.map(dia => {
                     var diasClase = {
                         dia: dia,
@@ -178,13 +229,10 @@ function saveDiasClase() {
                             "idFormatoLista": idFM
                         }
                     };
-
                     var datos = {
                         datosDiaClase: JSON.stringify(diasClase)
                     };
-
                     var params = new URLSearchParams(datos);
-
                     return fetch("../../api/diasClase/save?", {
                         method: "POST",
                         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -192,10 +240,191 @@ function saveDiasClase() {
                     })
                             .then(response => response.json())
                             .then(function (data) {
-                                setTimeout(function () {
-                                    saveHorarioDiaClase(dia);
-                                }, 2000);
-                                
+                                console.log(data);
+                                switch (dia) {
+                                    case 'Lunes':
+                                        horariosSeleccionadosLunes.forEach(horarioLunes => {
+                                            console.log(horarioLunes);
+                                            const horaClase = {
+                                                horario: horarioLunes,
+                                                "diaClase": {
+                                                    "idDiaClase": data
+                                                }
+                                            };
+                                            console.log(horaClase);
+                                            const datos = {
+                                                datosHorario: JSON.stringify(horaClase)
+                                            };
+                                            const params = new URLSearchParams(datos);
+                                            fetch("../../api/horario/save?", {
+                                                method: "POST",
+                                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                                body: params
+                                            })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(function (data) {
+                                                        console.log("SUCCESS");
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                    });
+                                        });
+                                        break;
+                                    case 'Martes':
+                                        horariosSeleccionadosMartes.forEach(horarioMartes => {
+                                            console.log(horarioMartes);
+                                            const horaClase = {
+                                                horario: horarioMartes,
+                                                "diaClase": {
+                                                    "idDiaClase": data
+                                                }
+                                            };
+                                            console.log(horaClase);
+                                            const datos = {
+                                                datosHorario: JSON.stringify(horaClase)
+                                            };
+                                            const params = new URLSearchParams(datos);
+                                            fetch("../../api/horario/save?", {
+                                                method: "POST",
+                                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                                body: params
+                                            })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(function (data) {
+                                                        console.log("SUCCESS");
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                    });
+                                        });
+                                        break;
+                                    case 'Miercoles':
+                                        horariosSeleccionadosMiercoles.forEach(horarioMiercoles => {
+                                            console.log(horarioMiercoles);
+                                            const horaClase = {
+                                                horario: horarioMiercoles,
+                                                "diaClase": {
+                                                    "idDiaClase": data
+                                                }
+                                            };
+                                            console.log(horaClase);
+                                            const datos = {
+                                                datosHorario: JSON.stringify(horaClase)
+                                            };
+                                            const params = new URLSearchParams(datos);
+                                            fetch("../../api/horario/save?", {
+                                                method: "POST",
+                                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                                body: params
+                                            })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(function (data) {
+                                                        console.log("SUCCESS");
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                    });
+                                        });
+                                        break;
+                                    case 'Jueves':
+                                        horariosSeleccionadosJueves.forEach(horarioJueves => {
+                                            console.log(horarioJueves);
+                                            const horaClase = {
+                                                horario: horarioJueves,
+                                                "diaClase": {
+                                                    "idDiaClase": data
+                                                }
+                                            };
+                                            console.log(horaClase);
+                                            const datos = {
+                                                datosHorario: JSON.stringify(horaClase)
+                                            };
+                                            const params = new URLSearchParams(datos);
+                                            fetch("../../api/horario/save?", {
+                                                method: "POST",
+                                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                                body: params
+                                            })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(function (data) {
+                                                        console.log("SUCCESS");
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                    });
+                                        });
+                                        break;
+                                    case 'Viernes':
+                                        horariosSeleccionadosViernes.forEach(horarioViernes => {
+                                            console.log(horarioViernes);
+                                            const horaClase = {
+                                                horario: horarioViernes,
+                                                "diaClase": {
+                                                    "idDiaClase": data
+                                                }
+                                            };
+                                            console.log(horaClase);
+                                            const datos = {
+                                                datosHorario: JSON.stringify(horaClase)
+                                            };
+                                            const params = new URLSearchParams(datos);
+                                            fetch("../../api/horario/save?", {
+                                                method: "POST",
+                                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                                body: params
+                                            })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(function (data) {
+                                                        console.log("SUCCESS");
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                    });
+                                        });
+                                        break;
+                                    case 'Sabado':
+                                        horariosSeleccionadosSabado.forEach(horarioSabado => {
+                                            console.log(horarioSabado);
+                                            const horaClase = {
+                                                horario: horarioSabado,
+                                                "diaClase": {
+                                                    "idDiaClase": data
+                                                }
+                                            };
+                                            console.log(horaClase);
+                                            const datos = {
+                                                datosHorario: JSON.stringify(horaClase)
+                                            };
+                                            const params = new URLSearchParams(datos);
+                                            fetch("../../api/horario/save?", {
+                                                method: "POST",
+                                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                                body: params
+                                            })
+                                                    .then(response => {
+                                                        return response.json();
+                                                    })
+                                                    .then(function (data) {
+                                                        console.log("SUCCESS");
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('Error:', error);
+                                                    });
+                                        });
+                                        break;
+                                }
+//                                    saveHorarioDiaClase(dia);
+
                                 return {success: true};
                             })
                             .catch(error => {
@@ -289,18 +518,15 @@ let horariosSeleccionadosMiercoles = [];
 let horariosSeleccionadosJueves = [];
 let horariosSeleccionadosViernes = [];
 let horariosSeleccionadosSabado = [];
-
 function agregarHorario(dia) {
     switch (dia) {
         case 'lunes':
             horariosSeleccionadosLunes.push(document.getElementById("cmbHorarioLunes").value);
             var divHoras = document.getElementById("horasSeleccionadasLunes");
             divHoras.innerHTML = "";
-
             var titulo = document.createElement("h4");
             titulo.textContent = "Horas seleccionadas";
             divHoras.appendChild(titulo);
-
             horariosSeleccionadosLunes.forEach(function (horario) {
                 var parrafo = document.createElement("p");
                 parrafo.textContent = horario;
@@ -311,11 +537,9 @@ function agregarHorario(dia) {
             horariosSeleccionadosMartes.push(document.getElementById("cmbHorarioMartes").value);
             var divHoras = document.getElementById("horasSeleccionadasMartes");
             divHoras.innerHTML = "";
-
             var titulo = document.createElement("h4");
             titulo.textContent = "Horas seleccionadas";
             divHoras.appendChild(titulo);
-
             horariosSeleccionadosMartes.forEach(function (horario) {
                 var parrafo = document.createElement("p");
                 parrafo.textContent = horario;
@@ -326,11 +550,9 @@ function agregarHorario(dia) {
             horariosSeleccionadosMiercoles.push(document.getElementById("cmbHorarioMiercoles").value);
             var divHoras = document.getElementById("horasSeleccionadasMiercoles");
             divHoras.innerHTML = "";
-
             var titulo = document.createElement("h4");
             titulo.textContent = "Horas seleccionadas";
             divHoras.appendChild(titulo);
-
             horariosSeleccionadosMiercoles.forEach(function (horario) {
                 var parrafo = document.createElement("p");
                 parrafo.textContent = horario;
@@ -341,11 +563,9 @@ function agregarHorario(dia) {
             horariosSeleccionadosJueves.push(document.getElementById("cmbHorarioJueves").value);
             var divHoras = document.getElementById("horasSeleccionadasJueves");
             divHoras.innerHTML = "";
-
             var titulo = document.createElement("h4");
             titulo.textContent = "Horas seleccionadas";
             divHoras.appendChild(titulo);
-
             horariosSeleccionadosJueves.forEach(function (horario) {
                 var parrafo = document.createElement("p");
                 parrafo.textContent = horario;
@@ -356,11 +576,9 @@ function agregarHorario(dia) {
             horariosSeleccionadosViernes.push(document.getElementById("cmbHorarioViernes").value);
             var divHoras = document.getElementById("horasSeleccionadasViernes");
             divHoras.innerHTML = "";
-
             var titulo = document.createElement("h4");
             titulo.textContent = "Horas seleccionadas";
             divHoras.appendChild(titulo);
-
             horariosSeleccionadosViernes.forEach(function (horario) {
                 var parrafo = document.createElement("p");
                 parrafo.textContent = horario;
@@ -371,11 +589,9 @@ function agregarHorario(dia) {
             horariosSeleccionadosSabado.push(document.getElementById("cmbHorarioSabado").value);
             var divHoras = document.getElementById("horasSeleccionadasSabado");
             divHoras.innerHTML = "";
-
             var titulo = document.createElement("h4");
             titulo.textContent = "Horas seleccionadas";
             divHoras.appendChild(titulo);
-
             horariosSeleccionadosSabado.forEach(function (horario) {
                 var parrafo = document.createElement("p");
                 parrafo.textContent = horario;
@@ -397,27 +613,21 @@ function saveHorarioDiaClase(dia) {
                 console.log("*****************************");
                 console.log("********** ULTIMO ID **************");
                 console.log(data);
-
                 switch (dia) {
                     case 'Lunes':
                         horariosSeleccionadosLunes.forEach(horarioLunes => {
                             console.log(horarioLunes);
-
                             const horaClase = {
                                 horario: horarioLunes,
                                 "diaClase": {
                                     "idDiaClase": data.idDiaClase
                                 }
                             };
-
                             console.log(horaClase);
-
                             const datos = {
                                 datosHorario: JSON.stringify(horaClase)
                             };
-
                             const params = new URLSearchParams(datos);
-
                             fetch("../../api/horario/save?", {
                                 method: "POST",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -437,22 +647,17 @@ function saveHorarioDiaClase(dia) {
                     case 'Martes':
                         horariosSeleccionadosMartes.forEach(horarioMartes => {
                             console.log(horarioMartes);
-
                             const horaClase = {
                                 horario: horarioMartes,
                                 "diaClase": {
                                     "idDiaClase": data.idDiaClase
                                 }
                             };
-
                             console.log(horaClase);
-
                             const datos = {
                                 datosHorario: JSON.stringify(horaClase)
                             };
-
                             const params = new URLSearchParams(datos);
-
                             fetch("../../api/horario/save?", {
                                 method: "POST",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -472,22 +677,17 @@ function saveHorarioDiaClase(dia) {
                     case 'Miercoles':
                         horariosSeleccionadosMiercoles.forEach(horarioMiercoles => {
                             console.log(horarioMiercoles);
-
                             const horaClase = {
                                 horario: horarioMiercoles,
                                 "diaClase": {
                                     "idDiaClase": data.idDiaClase
                                 }
                             };
-
                             console.log(horaClase);
-
                             const datos = {
                                 datosHorario: JSON.stringify(horaClase)
                             };
-
                             const params = new URLSearchParams(datos);
-
                             fetch("../../api/horario/save?", {
                                 method: "POST",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -507,22 +707,17 @@ function saveHorarioDiaClase(dia) {
                     case 'Jueves':
                         horariosSeleccionadosJueves.forEach(horarioJueves => {
                             console.log(horarioJueves);
-
                             const horaClase = {
                                 horario: horarioJueves,
                                 "diaClase": {
                                     "idDiaClase": data.idDiaClase
                                 }
                             };
-
                             console.log(horaClase);
-
                             const datos = {
                                 datosHorario: JSON.stringify(horaClase)
                             };
-
                             const params = new URLSearchParams(datos);
-
                             fetch("../../api/horario/save?", {
                                 method: "POST",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -542,22 +737,17 @@ function saveHorarioDiaClase(dia) {
                     case 'Viernes':
                         horariosSeleccionadosViernes.forEach(horarioViernes => {
                             console.log(horarioViernes);
-
                             const horaClase = {
                                 horario: horarioViernes,
                                 "diaClase": {
                                     "idDiaClase": data.idDiaClase
                                 }
                             };
-
                             console.log(horaClase);
-
                             const datos = {
                                 datosHorario: JSON.stringify(horaClase)
                             };
-
                             const params = new URLSearchParams(datos);
-
                             fetch("../../api/horario/save?", {
                                 method: "POST",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -577,22 +767,17 @@ function saveHorarioDiaClase(dia) {
                     case 'Sabado':
                         horariosSeleccionadosSabado.forEach(horarioSabado => {
                             console.log(horarioSabado);
-
                             const horaClase = {
                                 horario: horarioSabado,
                                 "diaClase": {
                                     "idDiaClase": data.idDiaClase
                                 }
                             };
-
                             console.log(horaClase);
-
                             const datos = {
                                 datosHorario: JSON.stringify(horaClase)
                             };
-
                             const params = new URLSearchParams(datos);
-
                             fetch("../../api/horario/save?", {
                                 method: "POST",
                                 headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -609,7 +794,6 @@ function saveHorarioDiaClase(dia) {
                                     });
                         });
                         break;
-
                 }
             })
             .catch(error => {
@@ -617,44 +801,46 @@ function saveHorarioDiaClase(dia) {
             });
 }
 
+function abrirBiblioteca() {
+    const input = document.getElementById('inputArchivo');
+    input.click();
 
+    input.onchange = function (e) {
+        const archivo = e.target.files[0];
+        if (!archivo) {
+            return;
+        }
 
-//function saveHorasClase() {
-//    const checkboxesHora = document.querySelectorAll('input[type="checkbox"].hora');
-//    var horasClase = [];
-//
-//    checkboxesHora.forEach(checkbox => {
-//        if (checkbox.checked) {
-//            horasClase.push(checkbox.value);
-//        }
-//    });
-//
-//    horasClase.forEach(hora => {
-//        const horaClase = {
-//            hora: hora,
-//            "diaClase": {
-//                "idDiaClase": 1
-//            }
-//        };
-//
-//        const datos = {
-//            datosHoraClase: JSON.stringify(horaClase)
-//        };
-//
-//        const params = new URLSearchParams(datos);
-//        fetch("../../api/horasClase/save?", {
-//            method: "POST",
-//            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-//            body: params
-//        })
-//                .then(response => {
-//                    return response.json();
-//                })
-//                .then(function (data) {
-//                    console.log("SUCCESS")
-//                })
-//                .catch(error => {
-//                    console.error('Error:', error);
-//                });
-//    });
-//}
+        if (archivo.type !== 'text/csv') {
+            alert('Por favor, selecciona un archivo CSV.');
+            return;
+        }
+
+        const nombreInput = document.getElementById('nombreArchivo');
+        nombreInput.value = archivo.name;
+
+        const lector = new FileReader();
+        lector.onload = function (e) {
+            const contenido = e.target.result;
+            procesarCSV(contenido);
+        };
+        lector.readAsText(archivo);
+    };
+}
+
+function procesarCSV(contenido) {
+    const lineas = contenido.split('\n');
+    const datos = [];
+    for (let i = 1; i < lineas.length; i++) {
+        const campos = lineas[i].split(',');
+        if (campos.length === 3) {
+            const nombre = campos[0];
+            const apellido = campos[1];
+            const fechaNacimiento = campos[2];
+            datos.push({nombre, apellido, fechaNacimiento});
+        }
+    }
+
+    alumnosExcel = datos;
+    console.log(alumnosExcel);
+}

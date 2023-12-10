@@ -27,7 +27,26 @@ import org.utl.model.Usuario;
  */
 @Path("Alumno")
 public class RESTAlumno {
-
+    
+    @POST
+    @Path("save")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response save(@FormParam("datosAlumno") @DefaultValue("") String datosAlumno) {
+        String out = null;
+        Gson gson = new Gson();
+        Alumno alumno = null;
+        ControllerAlumno ctrAlumno = new ControllerAlumno();
+        try {
+            alumno = gson.fromJson(datosAlumno, Alumno.class);
+            ctrAlumno.insert(alumno);
+            out = gson.toJson(alumno);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+    
     @POST
     @Path("getAll")
     @Produces(MediaType.APPLICATION_JSON)

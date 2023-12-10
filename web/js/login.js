@@ -44,6 +44,7 @@ function login() {
                     });
                 } else {
                     localStorage.setItem('idUsuario', data.idUsuario);
+                    localStorage.setItem('rol', data.rol);
                     
                     var contenedor = document.querySelector('.contenedor-login');
                     contenedor.classList.add('animate__fadeOutUp');
