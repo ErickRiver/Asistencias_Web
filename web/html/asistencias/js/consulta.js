@@ -384,7 +384,7 @@ function getAllAlumnos() {
 function llenarTablaAlumnos(data) {
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
+    
     data.forEach(asistencia => {
         const partesFecha = asistencia.dia.split('-');
         const anio = parseInt(partesFecha[0]);
@@ -392,10 +392,11 @@ function llenarTablaAlumnos(data) {
         const dia = parseInt(partesFecha[2]);
         const fecha = new Date(anio, mes, dia);
         const diaSemana = fecha.getDay();
-
+        
         registroAlumno =
                 '<tr>' +
                 '<td>' + asistencia.alumno.nombre + " " + asistencia.alumno.apellido + '</td>' +
+                '<td>' + asistencia.materia.nombre + '</td>' +
                 '<td>' + diasSemana[diaSemana] + " " + dia + "/" + meses[mes] + "/" + anio + '</td>' +
                 '<td>' + asistencia.hora + '</td>' +
                 '<td>' + asistencia.asistencia + '</td></tr>';
@@ -405,7 +406,7 @@ function llenarTablaAlumnos(data) {
     if (data.length === 0) {
         registroAlumno =
                 '<tr>' +
-                '<td colspan="4" style="text-align: center;">No hay registros</td>' +
+                '<td colspan="5" style="text-align: center;">No hay registros</td>' +
                 '<td hidden></td>' +
                 '<td hidden></td>' +
                 '<td hidden></td>' +

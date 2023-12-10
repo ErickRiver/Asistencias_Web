@@ -2,13 +2,16 @@ var cuerpotblAlumno = "";
 var registroAlumno;
 var alumnos = [];
 var listaAsistencia = [];
+var listaAlumnos = [];
 var idAlumno;
 var idGrupo;
 var idMateria;
+var listaFiltro = [];
 
 inicializar();
 
 function inicializar() {
+    getAllVistaLista();
     getAllGrupos();
     getAllMaterias();
     getAllAlumnos();
@@ -17,19 +20,21 @@ function inicializar() {
 const cmbAlumnos = document.getElementById('cmbAlumnos');
 cmbAlumnos.onchange = function () {
     idAlumno = this.value;
-    getVistaListaPorAlumno(idAlumno);
+
 };
 
 const cmbGrupo = document.getElementById('cmbGrupo');
 cmbGrupo.onchange = function () {
     idGrupo = this.value;
     filtrarPorGrupo();
+    llenarCmbAlumnos();
 };
 
 const cmbMateria = document.getElementById('cmbMateria');
 cmbMateria.onchange = function () {
     idMateria = this.value;
     filtrarPorMateria();
+    llenarCmbAlumnos();
 };
 
 function getAllAlumnos() {
@@ -44,21 +49,35 @@ function getAllAlumnos() {
                 return response.json();
             })
             .then(function (data) {
-                llenarCmbAlumnos(data);
+                listaAlumnos = data;
             })
             .catch(error => {
                 console.error('Error:', error);
             });
 }
 
-function llenarCmbAlumnos(data) {
-    const select = document.getElementById('cmbAlumnos');
+function llenarCmbAlumnos() {
+    console.log("***************alumnos***********")
+    console.log(listaAlumnos);
 
-    data.forEach(alumno => {
-        const option = document.createElement('option');
-        option.value = alumno.idAlumno;
-        option.text = alumno.nombre + " " + alumno.apellido;
-        select.appendChild(option);
+    const select = document.getElementById('cmbAlumnos');
+    select.innerHTML = '';
+
+    const option = document.createElement('option');
+    option.value = '';
+    option.text = 'Alumnos';
+    option.disabled = true;
+    option.selected = true;
+
+    select.appendChild(option);
+
+    listaAlumnos.forEach(lista => {
+        if (lista.grupo.idGrupo == idGrupo) {
+            const option = document.createElement('option');
+            option.value = lista.idAlumno;
+            option.text = lista.nombre + " " + lista.apellido;
+            select.appendChild(option);
+        }
     });
 }
 
@@ -123,17 +142,19 @@ function llenarCmbGrupo(data) {
     });
 }
 
-function getVistaListaPorAlumno(idAlumno) {
-    fetch("../../api/listaAsistencia/getVistaListaPorAlumno?idAlumno=" + idAlumno, {
-        method: "GET",
-        headers: {'Content-Type': 'application/json'}
+function getAllVistaLista() {
+    fetch("../../api/listaAsistencia/getAll", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify({})
     })
             .then(response => {
                 return response.json();
             })
             .then(function (data) {
                 listaAsistencia = data;
-                llenarTablaAlumnos(data);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -154,7 +175,10 @@ function llenarTablaAlumnos(data) {
 
         registroAlumno =
                 '<tr>' +
-                '<td>' + diasSemana[diaSemana] + " " + dia + "/" + meses[mes] + "/" + anio + '</td>' +
+                '<td>' + asistencia.alumno.nombre + " " + asistencia.alumno.apellido + '</td>' +
+                '<td>' + asistencia.materia.nombre + '</td>' +
+                '<td>' + dia + "/" + meses[mes] + "/" + anio + '</td>' +
+                '<td>' + asistencia.hora + '</td>' +
                 '<td>' + asistencia.asistencia + '</td></tr>';
         cuerpotblAlumno += registroAlumno;
     });
@@ -162,7 +186,9 @@ function llenarTablaAlumnos(data) {
     if (data.length === 0) {
         registroAlumno =
                 '<tr>' +
-                '<td colspan="2" style="text-align: center;">No hay registros</td>' +
+                '<td colspan="4" style="text-align: center;">No hay registros</td>' +
+                '<td hidden></td>' +
+                '<td hidden></td>' +
                 '<td hidden></td>' +
                 '</tr>';
         cuerpotblAlumno += registroAlumno;
@@ -176,7 +202,7 @@ const dpFechaInicio = document.getElementById('dpFechaInicio');
 const dpFechaFin = document.getElementById('dpFechaFin');
 
 function filtrarPorMateria() {
-    var listaFiltro = [];
+    listaFiltro = [];
     var fechaInicio = document.getElementById('dpFechaInicio').value;
     var fechaFin = document.getElementById('dpFechaFin').value;
     var fechaEstaEnRango;
@@ -212,12 +238,12 @@ function filtrarPorMateria() {
         });
     }
 
-    llenarTablaAlumnos(listaSemanaFiltro);
     llenarCmbAlumnos(listaFiltro);
+    llenarTablaAlumnos(listaFiltro);
 }
 
 function filtrarPorGrupo() {
-    var listaFiltro = [];
+    listaFiltro = [];
     var fechaInicio = document.getElementById('dpFechaInicio').value;
     var fechaFin = document.getElementById('dpFechaFin').value;
     var fechaEstaEnRango;
@@ -254,13 +280,12 @@ function filtrarPorGrupo() {
         });
     }
 
-    console.log(listaFiltro);
-    llenarTablaAlumnos(listaFiltro);
     llenarCmbAlumnos(listaFiltro);
+    llenarTablaAlumnos(listaFiltro);
 }
 
 function filtrarPorFechas() {
-    var listaFiltro = [];
+    listaFiltro = [];
     var fechaInicio = document.getElementById('dpFechaInicio').value;
     var fechaFin = document.getElementById('dpFechaFin').value;
     var fechaEstaEnRango;
@@ -298,9 +323,11 @@ function filtrarPorFechas() {
                 }
             });
         }
+
         llenarTablaAlumnos(listaFiltro);
     }
 }
+
 
 function generarReportePDF() {
     const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -308,50 +335,78 @@ function generarReportePDF() {
 
     const doc = new jsPDF();
     let y = 20;
-    const cellWidth = 85;
+    const cellWidth = 65;
     const cellHeight = 10;
     const column1X = 20;
-    const column2X = column1X + cellWidth + 10;
+    const column2X = column1X + cellWidth;
+    const column3X = column2X + 21.9;
+    const column4X = column3X + 21.9;
     const pageHeight = doc.internal.pageSize.height; // Altura de la página
 
     // Encabezado de la tabla
-    doc.text(column1X, 10, 'Reporte de Asistencias - ' + listaAsistencia[1].alumno.nombre + " " + listaAsistencia[1].alumno.apellido);
-    doc.text(column1X, y, 'Fecha de Asistencia');
-    doc.text(column2X, y, 'Asistencia');
+    doc.text(column1X, y, 'REPORTE DE ASISTENCIAS');
     y += 10;
 
-    if (listaAsistencia.length === 0) {
+    console.log("listaFiltro************************");
+    console.log(listaFiltro);
+
+    if (listaFiltro.length === 0) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Llene todos los campos',
+            text: 'No hay registros',
+            confirmButtonText: 'Aceptar'
+        });
+    } else if (document.getElementById("cmbGrupo").value == "" && document.getElementById("cmbMateria").value == "" && document.getElementById("cmbAlumnos").value == "") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Seleccione un filtro',
             confirmButtonText: 'Aceptar'
         });
     } else {
-        listaAsistencia.forEach(asistencia => {
+        let previousAlumnoNombre = '';
+
+        listaFiltro.forEach(asistencia => {
             const partesFecha = asistencia.dia.split('-');
             const anio = parseInt(partesFecha[0]);
             const mes = parseInt(partesFecha[1]) - 1;
             const dia = parseInt(partesFecha[2]);
             const fecha = new Date(anio, mes, dia);
             const diaSemana = fecha.getDay();
+            const horaAsistencia = asistencia.hora;
 
             const fechaTexto = diasSemana[diaSemana] + " " + dia + "/" + meses[mes] + "/" + anio;
             const asistenciaTexto = asistencia.asistencia;
+            doc.setFontSize(12);
+
+            if (asistencia.alumno.nombre !== previousAlumnoNombre) {
+                if (y >= pageHeight - 20) {
+                    doc.addPage();
+                    y = 50;
+                }
+                // Agregar encabezado con el nombre del alumno
+                doc.text(column1X, y + 10, 'Reporte de Asistencias - ' + asistencia.alumno.nombre + " " + asistencia.alumno.apellido);
+                y += 20; // Ajustar posición vertical
+                previousAlumnoNombre = asistencia.alumno.nombre; // Actualizar el nombre del alumno
+            }
 
             if (y >= pageHeight - 20) {
                 doc.addPage();
                 y = 20;
-                doc.text(column1X, 10, 'Reporte de Asistencias - ' + listaAsistencia[1].alumno.nombre + " " + listaAsistencia[1].alumno.apellido);
-                doc.text(column1X, y, 'Fecha de Asistencia');
-                doc.text(column2X, y, 'Asistencia');
+                doc.text(column1X, 10, 'Reporte de Asistencias - ' + asistencia.alumno.nombre + " " + asistencia.alumno.apellido);
                 y += 10;
             }
 
-            doc.rect(column1X, y, cellWidth, cellHeight);
-            doc.rect(column2X, y, cellWidth, cellHeight);
+            doc.rect(column1X, y, cellWidth, cellHeight); // La primera celda es el doble de ancha
+            doc.rect(column2X, y, cellWidth / 3, cellHeight); // Las demás celdas son la mitad de ancho
+            doc.rect(column3X, y, cellWidth / 3, cellHeight);
+            doc.rect(column4X, y, (cellWidth / 2) + 5, cellHeight);
+
             doc.text(column1X + 2, y + 5, fechaTexto);
             doc.text(column2X + 2, y + 5, asistenciaTexto);
+            doc.text(column3X + 2, y + 5, horaAsistencia);
+            doc.text(column4X + 2, y + 5, asistencia.materia.nombre);
             y += 10;
         });
 
@@ -362,4 +417,5 @@ function generarReportePDF() {
             text: 'Se generó el reporte correctamente.'
         });
     }
+
 }

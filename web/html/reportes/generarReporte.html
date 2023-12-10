@@ -44,13 +44,13 @@
 
                 <div class="contenedor-select">
                     <div class="contenedor-fecha">
-                        <label for="fechaInicio"><strong>Fecha de inicio</strong></label>
-                        <input type="date" id="dpFechaInicio" title="Fecha de inicio">
+                        <label for="fechaInicio">Fecha de inicio</label>
+                        <input type="date" id="dpFechaInicio" onchange="filtrarPorFechas();" title="Fecha de inicio">
                     </div>
 
                     <div class="contenedor-fecha">
-                        <label for="fechaFin"><strong>Fecha fin</strong></label>
-                        <input type="date" id="dpFechaFin" title="Fecha fin">
+                        <label for="fechaFin">Fecha fin</label>
+                        <input type="date" id="dpFechaFin" onchange="filtrarPorFechas();" title="Fecha fin">
                     </div>
 
                 </div>
@@ -70,7 +70,7 @@
                         <option value="" disabled selected>Alumnos</option>
                     </select>
                 </div>
-                
+
                 <button class="btn" id="btnGenerarReporte" onclick="generarReportePDF();"><span>Generar reporte<i class="fas fa-download"></i></span></button>
             </div>
 
@@ -79,7 +79,10 @@
                 <table id="tablaAlumnos">
                     <thead>
                         <tr>
+                            <th>Alumno</th>
+                            <th>Materia</th>
                             <th>Fecha</th>
+                            <th>Hora</th>
                             <th>Asistencia</th>
                         </tr>
                     </thead>
