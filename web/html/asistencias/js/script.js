@@ -54,12 +54,11 @@ function validarSesion() {
         } else if (rol === 'docente') {
             listasLink.style.display = 'none';
         } else if (rol === 'directivo') {
-            alert('No tienes permisos para acceder a esta página.');
-            window.location.href = '../../index.html';
+            reportesLink.style.display = 'none';
+            registrarAsistenciasLink.style.display = 'none';
             if (window.location.href === urlRegistro) {
-                reportesLink.style.display = 'none';
-                listasLink.style.display = 'none';
-                registrarAsistenciasLink.style.display = 'none';
+                alert('No tienes permisos para acceder a esta página.');
+                window.location.href = '../../index.html';
             }
         }
 

@@ -36,7 +36,7 @@ function validarSesion() {
             alert('No tienes permisos para acceder a esta página.');
             window.location.href = '../../index.html';
         } else if (rol === 'directivo') {
-            dropdown.style.display = 'none';
+            registrarAsistenciasLink.style.display = 'none';
             reportesLink.style.display = 'none';
         }
         return true;

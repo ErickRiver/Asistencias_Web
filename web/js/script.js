@@ -36,9 +36,7 @@ function validarSesion() {
         } else if (rol === 'docente') {
             listasLink.style.display = 'none';
         } else if (rol === 'directivo') {
-            dropdown.style.display = 'none';
             reportesLink.style.display = 'none';
-            consultaAsistencias.style.display = 'none';
             registrarAsistenciasLink.style.display = 'none';
         }
         return true;
