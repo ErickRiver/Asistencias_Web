@@ -14,3 +14,21 @@ function closeNavbarOutsideClick(event) {
 }
 
 document.addEventListener('click', closeNavbarOutsideClick);
+
+validarSesion();
+function validarSesion() {
+    const idUsuario = localStorage.getItem('idUsuario');
+
+    if (!idUsuario || idUsuario === "" || idUsuario === "0" || idUsuario === null) {
+        window.location.href = '../../login.html';
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function cerrarSesion() {
+    localStorage.removeItem('idUsuario');
+
+    window.location.href = '../../login.html';
+}

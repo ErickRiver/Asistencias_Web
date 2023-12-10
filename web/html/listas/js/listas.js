@@ -152,9 +152,10 @@ function saveFormatoLista() {
     }
 }
 
+let diasClases = [];
+
 function saveDiasClase() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    var diasClases = [];
 
     checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
@@ -164,110 +165,496 @@ function saveDiasClase() {
 
     fetch("../../api/formatoLista/getLastId", {
         method: "GET",
-        headers: { 'Content-Type': 'application/json' }
+        headers: {'Content-Type': 'application/json'}
     })
-        .then(response => response.json())
-        .then(function (data) {
-            var idFM = data.idFormatoLista;
+            .then(response => response.json())
+            .then(function (data) {
+                var idFM = data.idFormatoLista;
 
-            Promise.all(diasClases.map(dia => {
-                var diasClase = {
-                    dia: dia,
-                    "formatoLista": {
-                        "idFormatoLista": idFM
-                    }
-                };
+                Promise.all(diasClases.map(dia => {
+                    var diasClase = {
+                        dia: dia,
+                        "formatoLista": {
+                            "idFormatoLista": idFM
+                        }
+                    };
 
-                var datos = {
-                    datosDiaClase: JSON.stringify(diasClase)
-                };
+                    var datos = {
+                        datosDiaClase: JSON.stringify(diasClase)
+                    };
 
-                var params = new URLSearchParams(datos);
+                    var params = new URLSearchParams(datos);
 
-                return fetch("../../api/diasClase/save?", {
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-                    body: params
-                })
-                .then(response => response.json())
-                .then(function (data) {
-                    return { success: true };
-                })
-                .catch(error => {
-                    return { success: false };
-                });
-            }))
-            .then(results => {
-                const allSuccess = results.every(result => result.success);
-                if (allSuccess) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Guardado exitoso!',
-                        text: 'Los días de clase se han guardado correctamente.'
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error al guardar',
-                        text: 'Hubo un problema al guardar los días de clase.'
-                    });
-                }
+                    return fetch("../../api/diasClase/save?", {
+                        method: "POST",
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                        body: params
+                    })
+                            .then(response => response.json())
+                            .then(function (data) {
+                                setTimeout(function () {
+                                    saveHorarioDiaClase(dia);
+                                }, 2000);
+                                
+                                return {success: true};
+                            })
+                            .catch(error => {
+                                return {success: false};
+                            });
+                }))
+                        .then(results => {
+                            const allSuccess = results.every(result => result.success);
+                            if (allSuccess) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '¡Guardado exitoso!',
+                                    text: 'Los días de clase se han guardado correctamente.'
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error al guardar',
+                                    text: 'Hubo un problema al guardar los días de clase.'
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Ha ocurrido un error al procesar la solicitud.'
+                            });
+                        });
             })
             .catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Ha ocurrido un error al procesar la solicitud.'
+                    text: 'Ha ocurrido un error al obtener el ID del formato de lista.'
                 });
             });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Ha ocurrido un error al obtener el ID del formato de lista.'
-            });
-        });
 }
 
-function saveHorasClase() {
-    const checkboxesHora = document.querySelectorAll('input[type="checkbox"].hora');
-    var horasClase = [];
-
-    checkboxesHora.forEach(checkbox => {
-        if (checkbox.checked) {
-            horasClase.push(checkbox.value);
+function checkboxSeleccionado(checkbox) {
+    if (checkbox.checked) {
+        switch (checkbox.value) {
+            case 'Lunes':
+                document.getElementById("horariosLunes").style.display = "";
+                break;
+            case 'Martes':
+                document.getElementById("horariosMartes").style.display = "";
+                break;
+            case 'Miercoles':
+                document.getElementById("horariosMiercoles").style.display = "";
+                break;
+            case 'Jueves':
+                document.getElementById("horariosJueves").style.display = "";
+                break;
+            case 'Viernes':
+                document.getElementById("horariosViernes").style.display = "";
+                break;
+            case 'Sabado':
+                document.getElementById("horariosSabado").style.display = "";
+                break;
         }
-    });
-
-    horasClase.forEach(hora => {
-        const horaClase = {
-            hora: hora,
-            "diaClase": {
-                "idDiaClase": 1
-            }
-        };
-
-        const datos = {
-            datosHoraClase: JSON.stringify(horaClase)
-        };
-
-        const params = new URLSearchParams(datos);
-        fetch("../../api/horasClase/save?", {
-            method: "POST",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-            body: params
-        })
-                .then(response => {
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log("SUCCESS")
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-    });
+    } else {
+        switch (checkbox.value) {
+            case 'Lunes':
+                document.getElementById("horariosLunes").style.display = "none";
+                break;
+            case 'Martes':
+                document.getElementById("horariosMartes").style.display = "none";
+                break;
+            case 'Miercoles':
+                document.getElementById("horariosMiercoles").style.display = "none";
+                break;
+            case 'Jueves':
+                document.getElementById("horariosJueves").style.display = "none";
+                break;
+            case 'Viernes':
+                document.getElementById("horariosViernes").style.display = "none";
+                break;
+            case 'Sabado':
+                document.getElementById("horariosSabado").style.display = "none";
+                break;
+        }
+    }
 }
+
+let horariosSeleccionadosLunes = [];
+let horariosSeleccionadosMartes = [];
+let horariosSeleccionadosMiercoles = [];
+let horariosSeleccionadosJueves = [];
+let horariosSeleccionadosViernes = [];
+let horariosSeleccionadosSabado = [];
+
+function agregarHorario(dia) {
+    switch (dia) {
+        case 'lunes':
+            horariosSeleccionadosLunes.push(document.getElementById("cmbHorarioLunes").value);
+            var divHoras = document.getElementById("horasSeleccionadasLunes");
+            divHoras.innerHTML = "";
+
+            var titulo = document.createElement("h4");
+            titulo.textContent = "Horas seleccionadas";
+            divHoras.appendChild(titulo);
+
+            horariosSeleccionadosLunes.forEach(function (horario) {
+                var parrafo = document.createElement("p");
+                parrafo.textContent = horario;
+                divHoras.appendChild(parrafo);
+            });
+            break;
+        case 'martes':
+            horariosSeleccionadosMartes.push(document.getElementById("cmbHorarioMartes").value);
+            var divHoras = document.getElementById("horasSeleccionadasMartes");
+            divHoras.innerHTML = "";
+
+            var titulo = document.createElement("h4");
+            titulo.textContent = "Horas seleccionadas";
+            divHoras.appendChild(titulo);
+
+            horariosSeleccionadosMartes.forEach(function (horario) {
+                var parrafo = document.createElement("p");
+                parrafo.textContent = horario;
+                divHoras.appendChild(parrafo);
+            });
+            break;
+        case 'miercoles':
+            horariosSeleccionadosMiercoles.push(document.getElementById("cmbHorarioMiercoles").value);
+            var divHoras = document.getElementById("horasSeleccionadasMiercoles");
+            divHoras.innerHTML = "";
+
+            var titulo = document.createElement("h4");
+            titulo.textContent = "Horas seleccionadas";
+            divHoras.appendChild(titulo);
+
+            horariosSeleccionadosMiercoles.forEach(function (horario) {
+                var parrafo = document.createElement("p");
+                parrafo.textContent = horario;
+                divHoras.appendChild(parrafo);
+            });
+            break;
+        case 'jueves':
+            horariosSeleccionadosJueves.push(document.getElementById("cmbHorarioJueves").value);
+            var divHoras = document.getElementById("horasSeleccionadasJueves");
+            divHoras.innerHTML = "";
+
+            var titulo = document.createElement("h4");
+            titulo.textContent = "Horas seleccionadas";
+            divHoras.appendChild(titulo);
+
+            horariosSeleccionadosJueves.forEach(function (horario) {
+                var parrafo = document.createElement("p");
+                parrafo.textContent = horario;
+                divHoras.appendChild(parrafo);
+            });
+            break;
+        case 'viernes':
+            horariosSeleccionadosViernes.push(document.getElementById("cmbHorarioViernes").value);
+            var divHoras = document.getElementById("horasSeleccionadasViernes");
+            divHoras.innerHTML = "";
+
+            var titulo = document.createElement("h4");
+            titulo.textContent = "Horas seleccionadas";
+            divHoras.appendChild(titulo);
+
+            horariosSeleccionadosViernes.forEach(function (horario) {
+                var parrafo = document.createElement("p");
+                parrafo.textContent = horario;
+                divHoras.appendChild(parrafo);
+            });
+            break;
+        case 'sabado':
+            horariosSeleccionadosSabado.push(document.getElementById("cmbHorarioSabado").value);
+            var divHoras = document.getElementById("horasSeleccionadasSabado");
+            divHoras.innerHTML = "";
+
+            var titulo = document.createElement("h4");
+            titulo.textContent = "Horas seleccionadas";
+            divHoras.appendChild(titulo);
+
+            horariosSeleccionadosSabado.forEach(function (horario) {
+                var parrafo = document.createElement("p");
+                parrafo.textContent = horario;
+                divHoras.appendChild(parrafo);
+            });
+            break;
+    }
+}
+
+function saveHorarioDiaClase(dia) {
+    fetch("../../api/diasClase/getLastId", {
+        method: "GET",
+        headers: {'Content-Type': 'application/json'}
+    })
+            .then(response => {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log("*****************************");
+                console.log("********** ULTIMO ID **************");
+                console.log(data);
+
+                switch (dia) {
+                    case 'Lunes':
+                        horariosSeleccionadosLunes.forEach(horarioLunes => {
+                            console.log(horarioLunes);
+
+                            const horaClase = {
+                                horario: horarioLunes,
+                                "diaClase": {
+                                    "idDiaClase": data.idDiaClase
+                                }
+                            };
+
+                            console.log(horaClase);
+
+                            const datos = {
+                                datosHorario: JSON.stringify(horaClase)
+                            };
+
+                            const params = new URLSearchParams(datos);
+
+                            fetch("../../api/horario/save?", {
+                                method: "POST",
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                body: params
+                            })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log("SUCCESS");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        });
+                        break;
+                    case 'Martes':
+                        horariosSeleccionadosMartes.forEach(horarioMartes => {
+                            console.log(horarioMartes);
+
+                            const horaClase = {
+                                horario: horarioMartes,
+                                "diaClase": {
+                                    "idDiaClase": data.idDiaClase
+                                }
+                            };
+
+                            console.log(horaClase);
+
+                            const datos = {
+                                datosHorario: JSON.stringify(horaClase)
+                            };
+
+                            const params = new URLSearchParams(datos);
+
+                            fetch("../../api/horario/save?", {
+                                method: "POST",
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                body: params
+                            })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log("SUCCESS");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        });
+                        break;
+                    case 'Miercoles':
+                        horariosSeleccionadosMiercoles.forEach(horarioMiercoles => {
+                            console.log(horarioMiercoles);
+
+                            const horaClase = {
+                                horario: horarioMiercoles,
+                                "diaClase": {
+                                    "idDiaClase": data.idDiaClase
+                                }
+                            };
+
+                            console.log(horaClase);
+
+                            const datos = {
+                                datosHorario: JSON.stringify(horaClase)
+                            };
+
+                            const params = new URLSearchParams(datos);
+
+                            fetch("../../api/horario/save?", {
+                                method: "POST",
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                body: params
+                            })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log("SUCCESS");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        });
+                        break;
+                    case 'Jueves':
+                        horariosSeleccionadosJueves.forEach(horarioJueves => {
+                            console.log(horarioJueves);
+
+                            const horaClase = {
+                                horario: horarioJueves,
+                                "diaClase": {
+                                    "idDiaClase": data.idDiaClase
+                                }
+                            };
+
+                            console.log(horaClase);
+
+                            const datos = {
+                                datosHorario: JSON.stringify(horaClase)
+                            };
+
+                            const params = new URLSearchParams(datos);
+
+                            fetch("../../api/horario/save?", {
+                                method: "POST",
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                body: params
+                            })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log("SUCCESS");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        });
+                        break;
+                    case 'Viernes':
+                        horariosSeleccionadosViernes.forEach(horarioViernes => {
+                            console.log(horarioViernes);
+
+                            const horaClase = {
+                                horario: horarioViernes,
+                                "diaClase": {
+                                    "idDiaClase": data.idDiaClase
+                                }
+                            };
+
+                            console.log(horaClase);
+
+                            const datos = {
+                                datosHorario: JSON.stringify(horaClase)
+                            };
+
+                            const params = new URLSearchParams(datos);
+
+                            fetch("../../api/horario/save?", {
+                                method: "POST",
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                body: params
+                            })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log("SUCCESS");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        });
+                        break;
+                    case 'Sabado':
+                        horariosSeleccionadosSabado.forEach(horarioSabado => {
+                            console.log(horarioSabado);
+
+                            const horaClase = {
+                                horario: horarioSabado,
+                                "diaClase": {
+                                    "idDiaClase": data.idDiaClase
+                                }
+                            };
+
+                            console.log(horaClase);
+
+                            const datos = {
+                                datosHorario: JSON.stringify(horaClase)
+                            };
+
+                            const params = new URLSearchParams(datos);
+
+                            fetch("../../api/horario/save?", {
+                                method: "POST",
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                                body: params
+                            })
+                                    .then(response => {
+                                        return response.json();
+                                    })
+                                    .then(function (data) {
+                                        console.log("SUCCESS");
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        });
+                        break;
+
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+}
+
+
+
+//function saveHorasClase() {
+//    const checkboxesHora = document.querySelectorAll('input[type="checkbox"].hora');
+//    var horasClase = [];
+//
+//    checkboxesHora.forEach(checkbox => {
+//        if (checkbox.checked) {
+//            horasClase.push(checkbox.value);
+//        }
+//    });
+//
+//    horasClase.forEach(hora => {
+//        const horaClase = {
+//            hora: hora,
+//            "diaClase": {
+//                "idDiaClase": 1
+//            }
+//        };
+//
+//        const datos = {
+//            datosHoraClase: JSON.stringify(horaClase)
+//        };
+//
+//        const params = new URLSearchParams(datos);
+//        fetch("../../api/horasClase/save?", {
+//            method: "POST",
+//            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+//            body: params
+//        })
+//                .then(response => {
+//                    return response.json();
+//                })
+//                .then(function (data) {
+//                    console.log("SUCCESS")
+//                })
+//                .catch(error => {
+//                    console.error('Error:', error);
+//                });
+//    });
+//}

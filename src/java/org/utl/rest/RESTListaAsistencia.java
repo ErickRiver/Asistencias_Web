@@ -99,7 +99,25 @@ public class RESTListaAsistencia {
 
         return Response.status(Response.Status.OK).entity(out).build();
     }
+    
+    @GET
+    @Path("getVistaListaPorAlumno")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVistaListaPorAlumno(@QueryParam("idAlumno") @DefaultValue("0") int idAlumno) {
+        String out = null;
+        Gson gson = new Gson();
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            List<ListaAsistencia> listaFormatos = cla.getVistaListaAlumno(idAlumno);
+            out = gson.toJson(listaFormatos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
 
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+    
     @GET
     @Path("getVistaListaPorSemanaYmateria")
     @Produces(MediaType.APPLICATION_JSON)

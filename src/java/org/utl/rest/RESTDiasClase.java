@@ -7,6 +7,7 @@ package org.utl.rest;
 import com.google.gson.Gson;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -75,6 +76,25 @@ public class RESTDiasClase {
         try {
             List<DiaClase> listaDias = cdc.getAll();
             out = gson.toJson(listaDias);
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @GET
+    @Path("getLastId")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLastId() {
+        String out = null;
+        Gson gson = new Gson();
+        DiaClase diaClase = null;
+        ControllerDiaClase cda = new ControllerDiaClase();
+        try {
+            diaClase = cda.getLastId();
+            out = gson.toJson(diaClase);
         } catch (Exception e) {
             e.printStackTrace();
             out = "{\"exception\":\"Error interno del servidor.\"}";

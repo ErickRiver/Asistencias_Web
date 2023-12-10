@@ -7,6 +7,7 @@
     <link rel="icon" href="img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="css/login.css">
     <title>Login</title>
     </style>
@@ -29,10 +30,13 @@
                 <i class="fa fa-lock" onclick="togglePassword()"></i>
                 <input type="password" placeholder="Contraseña" id="txtContrasenia">
             </div>
-            <button class="btn login" id="btnLogin"><span>Iniciar Sesión</span></button>
+            <button class="btn login" id="btnLogin" onclick="login();"><span>Iniciar Sesión</span></button>
         </div>
     </div>
+        
     <script src="js/login.js"></script>
+    <script src="html/listas/js/listas.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
 </body>
 
 </html>
