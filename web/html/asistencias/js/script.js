@@ -57,8 +57,9 @@ function validarSesion() {
             alert('No tienes permisos para acceder a esta página.');
             window.location.href = '../../index.html';
             if (window.location.href === urlRegistro) {
-                alert('No tienes permisos para acceder a esta página.');
-                window.location.href = '../../index.html';
+                reportesLink.style.display = 'none';
+                listasLink.style.display = 'none';
+                registrarAsistenciasLink.style.display = 'none';
             }
         }
 

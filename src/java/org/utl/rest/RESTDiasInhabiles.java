@@ -28,15 +28,15 @@ public class RESTDiasInhabiles {
     @POST
     @Path("save")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response save(@FormParam("datosDiaInhabiles") @DefaultValue("") String datosDiaInhabiles) {
+    public Response save(@FormParam("idFormatoLista") @DefaultValue("0") int idFormatoLista) {
         String out = null;
         Gson gson = new Gson();
         DiaInhabil diaInhabil = null;
         ControllerDiaInhabil cdi = new ControllerDiaInhabil();
         try {
-            diaInhabil = gson.fromJson(datosDiaInhabiles, DiaInhabil.class);
-            cdi.insert(diaInhabil);
-            out = gson.toJson(diaInhabil);
+            //diaInhabil = gson.fromJson(datosDiaInhabiles, DiaInhabil.class);
+            cdi.insert(idFormatoLista);
+            out = gson.toJson(idFormatoLista);
         } catch (Exception e) {
             e.printStackTrace();
             out = "{\"exception\":\"Error interno del servidor.\"}";

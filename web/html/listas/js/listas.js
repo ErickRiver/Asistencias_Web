@@ -174,7 +174,7 @@ function saveFormatoLista() {
                 "idDocente": document.getElementById("cmbDocente").value
             },
             "semanas": document.getElementById("txtSemanas").value,
-            "periodo": document.getElementById("cmbPeriodo").value, 
+            "periodo": document.getElementById("cmbPeriodo").value,
             "nomenclatura": 1
         };
         datos = {
@@ -222,6 +222,8 @@ function saveDiasClase() {
             .then(response => response.json())
             .then(function (data) {
                 var idFM = data.idFormatoLista;
+                saveDiasInhabiles(data.idFormatoLista);
+
                 Promise.all(diasClases.map(dia => {
                     var diasClase = {
                         dia: dia,
@@ -463,6 +465,29 @@ function saveDiasClase() {
                     title: 'Error',
                     text: 'Ha ocurrido un error al obtener el ID del formato de lista.'
                 });
+            });
+}
+
+function saveDiasInhabiles(idFormatoLista) {
+    datos = {
+        idFormatoLista: idFormatoLista
+    };
+    
+    params = new URLSearchParams(datos);
+    fetch("../../api/diaInhabil/save?",
+            {
+                method: "POST",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+                body: params
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(function (data) {
+                console.log("SE GUARDARON LOS DIAS INHABILES")
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
 }
 
