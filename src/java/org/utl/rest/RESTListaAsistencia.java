@@ -47,6 +47,26 @@ public class RESTListaAsistencia {
     }
 
     @POST
+    @Path("update")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response save(@FormParam("idListaAsistencia") @DefaultValue("0") int idListaAsistencia,
+            @FormParam("asistencia") @DefaultValue("") char asistencia) {
+        String out = null;
+        Gson gson = new Gson();
+        ListaAsistencia listaAsistencia = null;
+        ControllerListaAsistencia cla = new ControllerListaAsistencia();
+        try {
+            //listaAsistencia = gson.fromJson(datosLista, ListaAsistencia.class);
+            cla.update(idListaAsistencia, asistencia);
+            out = "{\"success\":\"Operación completada con éxito.\"}";
+        } catch (Exception e) {
+            e.printStackTrace();
+            out = "{\"exception\":\"Error interno del servidor.\"}";
+        }
+        return Response.status(Response.Status.OK).entity(out).build();
+    }
+
+    @POST
     @Path("getAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
@@ -99,7 +119,7 @@ public class RESTListaAsistencia {
 
         return Response.status(Response.Status.OK).entity(out).build();
     }
-    
+
     @GET
     @Path("getVistaListaPorAlumno")
     @Produces(MediaType.APPLICATION_JSON)
@@ -117,12 +137,12 @@ public class RESTListaAsistencia {
 
         return Response.status(Response.Status.OK).entity(out).build();
     }
-    
+
     @GET
     @Path("getVistaListaPorSemanaYmateria")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVistaListaPorSemanaYmateria(@QueryParam("semana") @DefaultValue("0") int semana,
-                                                   @QueryParam("idMateria") @DefaultValue("0") int idMateria) {
+            @QueryParam("idMateria") @DefaultValue("0") int idMateria) {
         String out = null;
         Gson gson = new Gson();
         ControllerListaAsistencia cla = new ControllerListaAsistencia();
@@ -136,13 +156,13 @@ public class RESTListaAsistencia {
 
         return Response.status(Response.Status.OK).entity(out).build();
     }
-    
+
     @GET
     @Path("getVistaListaPorSemanaYmateriaYgrupo")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getVistaListaPorSemanaYmateriaYgrupo(@QueryParam("semana") @DefaultValue("0") int semana,
-                                                   @QueryParam("idMateria") @DefaultValue("0") int idMateria,
-                                                   @QueryParam("idGrupo") @DefaultValue("0") int idGrupo) {
+            @QueryParam("idMateria") @DefaultValue("0") int idMateria,
+            @QueryParam("idGrupo") @DefaultValue("0") int idGrupo) {
         String out = null;
         Gson gson = new Gson();
         ControllerListaAsistencia cla = new ControllerListaAsistencia();

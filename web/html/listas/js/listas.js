@@ -125,7 +125,7 @@ function saveAlumnosExcel() {
         };
 
         params = new URLSearchParams(datos);
-        fetch("../../api/Alumno/save?",
+        fetch("../../api/listaAsistencia/update?",
                 {
                     method: "POST",
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},

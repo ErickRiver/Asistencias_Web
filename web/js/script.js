@@ -37,8 +37,8 @@ function validarSesion() {
             listasLink.style.display = 'none';
         } else if (rol === 'directivo') {
             reportesLink.style.display = 'none';
-            registrarAsistenciasLink.style.display = 'none';
         }
+        
         return true;
     }
 }

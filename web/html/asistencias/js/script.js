@@ -55,11 +55,6 @@ function validarSesion() {
             listasLink.style.display = 'none';
         } else if (rol === 'directivo') {
             reportesLink.style.display = 'none';
-            registrarAsistenciasLink.style.display = 'none';
-            if (window.location.href === urlRegistro) {
-                alert('No tienes permisos para acceder a esta página.');
-                window.location.href = '../../index.html';
-            }
         }
 
         return true;
