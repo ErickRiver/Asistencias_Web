@@ -1,91 +1,249 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Listas</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="../../img/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
 
-<body>
-    <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+        <link rel="stylesheet" href="css/styles.css">
+        <title>Listas</title>
+    </head>
 
-    <div class="navbar">
-        <a href="../../index.html">
-            <div class="logo">
-                <img src="../../img/logo.png" alt="logo">
+    <body>
+        <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+
+        <div class="navbar">
+            <a href="../../index.html">
+                <div class="logo">
+                    <img src="../../img/logo.png" alt="logo">
+                </div>
+            </a>
+
+            <div class="menu">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="../asistencias/consulta.html" id="consultaAsistencias">Consultar Asistencias</a>
+                        <a href="../asistencias/registrar.html" id="registrarAsistencias">Registrar Asistencias</a>
+                    </div>
+                </div>
+                <a href="../reportes/generarReporte.html" id="reportesLink">Reportes</a>
+                <a href="../listas/listas.html" id="listasLink">Listas</a>
+                <a href="#" class="ultimo-item" onclick="cerrarSesion();">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
             </div>
-        </a>
+        </div>
 
-        <div class="menu">
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
-                <div class="dropdown-content">
-                    <a href="../asistencias/consulta.html">Consultar Asistencias</a>
-                    <a href="../asistencias/registrar.html">Registrar Asistencias</a>
+        <h1 class="titulo">Generación de listas</h1>
+        <div class="contenedor">
+            <div class="contenedor-cmb">
+                <select id="cmbGrupo" name="cmbGrupo" title="Seleccione Grupo">
+                    <option value="" selected disabled>Grupo</option>
+                    <!-- Resto de opciones para el combo de Grupo -->
+                </select>
+
+                <select id="cmbDocente" name="cmbDocente" title="Seleccione Docente">
+                    <option value="" selected disabled>Docente</option>
+                    <!-- Resto de opciones para el combo de Docente -->
+                </select>
+
+                <select id="cmbMateria" name="cmbMateria" title="Seleccione Materia">
+                    <option value="" selected disabled>Materia</option>
+                    <!-- Resto de opciones para el combo de Materia -->
+                </select>
+
+                <input type="number" id="txtSemanas" name="txtSemanas" placeholder="Semanas" max="14" min="0" style="text-align: center;">
+
+                <input type="file" id="inputArchivo" accept=".csv" style="display: none;">
+                <button onclick="abrirBiblioteca()">Seleccionar archivo CSV</button>
+                <input type="text" id="nombreArchivo" readonly>
+            </div>
+
+            <div class="contenedor-cmb">
+                <select id="cmbPeriodo" name="cmbPeriodo" title="Seleccione un periodo">
+                    <option value="" selected disabled>Periodo</option>
+                    <option value="Septiembre - Diciembre">Septiembre - Diciembre</option>
+                    <option value="Enero - Abril">Enero -Abril</option>
+                    <option value="Mayo - Agosto">Mayo - Agosto</option>
+                </select>
+                <form style="margin: 20px;">
+                    <fieldset>
+                        <legend>Selecciona los días de clase:</legend>
+                        <div class="contenedor-checkbox" style="display: flex; justify-content: center; align-items: center;">
+                            <label><input type="checkbox" name="dia" value="Lunes" onchange="checkboxSeleccionado(this)"> Lunes</label><br>
+                            <label><input type="checkbox" name="dia" value="Martes" onchange="checkboxSeleccionado(this)"> Martes</label><br>
+                            <label><input type="checkbox" name="dia" value="Miercoles" onchange="checkboxSeleccionado(this)"> Miércoles</label><br>
+                            <label><input type="checkbox" name="dia" value="Jueves" onchange="checkboxSeleccionado(this)"> Jueves</label><br>
+                            <label><input type="checkbox" name="dia" value="Viernes" onchange="checkboxSeleccionado(this)"> Viernes</label><br>
+                            <label><input type="checkbox" name="dia" value="Sabado" onchange="checkboxSeleccionado(this)"> Sábado</label><br>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="contenedor-horario" style="gap: 20px;">
+                    <div class="contenedor-select-horario" id="horariosLunes"  style="display: none;">
+                        <h3>Horario lunes</h3>
+                        <select id="cmbHorarioLunes" name="cmbHorarioLunes" title="Seleccione el horario">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="7:00 - 8:00">7:00 - 8:00</option>
+                            <option value="8:00 - 9:00">8:00 - 9:00</option>
+                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <button class="btn" onclick="agregarHorario('lunes');"><span>Agregar hora</span></button>
+
+                        <div id="horasSeleccionadasLunes">
+
+                        </div>
+                    </div>
+
+                    <div class="contenedor-select-horario" id="horariosMartes"  style="display: none;">
+                        <h3>Horario martes</h3>
+                        <select id="cmbHorarioMartes" name="cmbHorarioMartes" title="Seleccione el horario">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="7:00 - 8:00">7:00 - 8:00</option>
+                            <option value="8:00 - 9:00">8:00 - 9:00</option>
+                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <button class="btn" onclick="agregarHorario('martes');"><span>Agregar hora</span></button>
+                        <div id="horasSeleccionadasMartes">
+
+                        </div>
+                    </div>
+
+
+                    <div class="contenedor-select-horario" id="horariosMiercoles" style="display: none;">
+                        <h3>Horario miercoles</h3>
+                        <select id="cmbHorarioMiercoles" name="cmbHorarioMiercoles" title="Seleccione el horario">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="7:00 - 8:00">7:00 - 8:00</option>
+                            <option value="8:00 - 9:00">8:00 - 9:00</option>
+                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <button class="btn" onclick="agregarHorario('miercoles');"><span>Agregar hora</span></button>
+                        <div id="horasSeleccionadasMiercoles">
+
+                        </div>
+                    </div>
+
+                    <div class="contenedor-select-horario" id="horariosJueves" style="display: none;">
+                        <h3>Horario jueves</h3>
+                        <select id="cmbHorarioJueves" name="cmbHorarioJueves" title="Seleccione el horario">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="7:00 - 8:00">7:00 - 8:00</option>
+                            <option value="8:00 - 9:00">8:00 - 9:00</option>
+                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <button class="btn" onclick="agregarHorario('jueves');"><span>Agregar hora</span></button>
+                        <div id="horasSeleccionadasJueves">
+
+                        </div>
+                    </div>
+
+                    <div class="contenedor-select-horario" id="horariosViernes" style="display: none;">
+                        <h3>Horario viernes</h3>
+                        <select id="cmbHorarioViernes" name="cmbHorarioViernes" title="Seleccione el horario">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="7:00 - 8:00">7:00 - 8:00</option>
+                            <option value="8:00 - 9:00">8:00 - 9:00</option>
+                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <button class="btn" onclick="agregarHorario('viernes');"><span>Agregar hora</span></button>
+                        <div id="horasSeleccionadasViernes">
+
+                        </div>
+                    </div>
+
+                    <div class="contenedor-select-horario" id="horariosSabado" style="display: none;">
+                        <h3>Horario sabado</h3>
+                        <select id="cmbHorarioSabado" name="cmbHorarioSabado" title="Seleccione el horario">
+                            <option value="" selected disabled>Horario</option>
+                            <option value="7:00 - 8:00">7:00 - 8:00</option>
+                            <option value="8:00 - 9:00">8:00 - 9:00</option>
+                            <option value="9:00 - 10:00">9:00 - 10:00</option>
+                            <option value="10:00 - 11:00">10:00 - 11:00</option>
+                            <option value="11:00 - 12:00">11:00 - 12:00</option>
+                            <option value="12:00 - 13:00">12:00 - 13:00</option>
+                            <option value="13:00 - 14:00">13:00 - 14:00</option>
+                            <option value="14:00 - 15:00">14:00 - 15:00</option>
+                            <option value="15:00 - 16:00">15:00 - 16:00</option>
+                            <option value="16:00 - 17:00">16:00 - 17:00</option>
+                            <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            <option value="18:00 - 19:00">18:00 - 19:00</option>
+                            <option value="19:00 - 20:00">19:00 - 20:00</option>
+                            <option value="20:00 - 21:00">20:00 - 21:00</option>
+                        </select>
+                        <button class="btn" onclick="agregarHorario('sabado');"><span>Agregar hora</span></button>
+                        <div id="horasSeleccionadasSabado">
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <a href="../reportes/generarReporte.html">Reportes</a>
-            <a href="../listas/listas.html">Listas</a>
-            <a href="#" class="ultimo-item">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
-        </div>
-    </div>
 
-    <h1 class="titulo">Generación de listas</h1>
-    <div class="contenedor">
-        <div class="contenedor-cmb">
-            <select id="cmbGrupo" name="cmbGrupo" title="Seleccione Grupo">
-                <option value="" selected disabled>Grupo</option>
-                <!-- Resto de opciones para el combo de Grupo -->
-            </select>
-
-            <select id="cmbDocente" name="cmbDocente" title="Seleccione Docente">
-                <option value="" selected disabled>Docente</option>
-                <!-- Resto de opciones para el combo de Docente -->
-            </select>
-
-            <select id="cmbMateria" name="cmbMateria" title="Seleccione Materia">
-                <option value="" selected disabled>Materia</option>
-                <!-- Resto de opciones para el combo de Materia -->
-            </select>
-
-            <select id="cmbDiasInhabiles" name="cmbDiasInhabiles" title="Seleccione Días Inhábiles">
-                <option value="" selected disabled>Días Inhábiles</option>
-                <!-- Resto de opciones para el combo de Días Inhábiles -->
-            </select>
+            <button class="btn" id="btnGenerarLista" onclick="saveFormatoLista();"><span>Generar lista <i class="fas fa-list-alt"></i></span></button>
         </div>
 
-        <div class="contenedor-cmb">
-            <select id="cmbDiasClase" name="cmbDiasClase" title="Seleccione Días de Clase">
-                <option value="" selected disabled>Días de Clase</option>
-                <!-- Resto de opciones para el combo de Días de Clase -->
-            </select>
-
-            <select id="cmbHorasClase" name="cmbHorasClase" title="Seleccione Horas de Clase">
-                <option value="" selected disabled>Horas de Clase</option>
-                <!-- Resto de opciones para el combo de Horas de Clase -->
-            </select>
-
-            <select id="cmbSemanas" name="cmbSemanas" title="Seleccione Semanas">
-                <option value="" selected disabled>Semanas</option>
-                <!-- Resto de opciones para el combo de Semanas -->
-            </select>
-
-            <select id="cmbNomenclaturaAsistencia" name="cmbNomenclaturaAsistencia"
-                title="Seleccione Nomenclatura de Asistencia">
-                <option value="" selected disabled>Nomenclatura de Asistencia</option>
-                <!-- Resto de opciones para el combo de Nomenclatura de Asistencia -->
-            </select>
-        </div>
-
-        <button class="btn"><span>Generar lista <i class="fas fa-list-alt"></i></span></button>
-    </div>
-
-    <script src="js/script.js"></script>
-</body>
+        <script src="js/script.js"></script>
+        <script src="js/listas.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.all.min.js"></script>
+    </body>
 
 </html>

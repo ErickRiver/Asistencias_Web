@@ -1,312 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="../../img/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+        <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <link rel="stylesheet" href="js/gft.css"/>
 
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Consulta</title>
-</head>
+        <link rel="stylesheet" href="css/styles.css">
+        <title>Consulta</title>
+    </head>
 
-<body>
-    <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
+    <body>
+        <i class="fas fa-bars" id="navbar-icon" onclick="toggleNavbar();"></i>
 
-    <div class="navbar">
-        <a href="../../index.html">
-            <div class="logo">
-                <img src="../../img/logo.png" alt="logo">
-            </div>
-        </a>
-
-        <div class="menu">
-            <div class="dropdown">
-                <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
-                <div class="dropdown-content">
-                    <a href="../asistencias/consulta.html">Consultar Asistencias</a>
-                    <a href="../asistencias/registrar.html">Registrar Asistencias</a>
+        <div class="navbar">
+            <a href="../../index.html">
+                <div class="logo">
+                    <img src="../../img/logo.png" alt="logo">
                 </div>
-            </div>
-            <a href="../reportes/generarReporte.html">Reportes</a>
-            <a href="../listas/listas.html">Listas</a>
-            <a href="#" class="ultimo-item">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
-        </div>
-    </div>
+            </a>
 
-    <h1 class="titulo">Consulta de asistencia</h1>
-
-    <div class="slider">
-        <div class="slide">
-            <h2 class="titulo-secundario">Semana 1</h2>
-            <div class="contenedor">
-                <div class="contenedor-opciones">
-                    <div class="input-container">
-                        <input type="search" placeholder="Buscar alumno" id="txtBuscar" />
-                        <i class="fas fa-search"></i>
+            <div class="menu">
+                <div class="dropdown">
+                    <a href="#" class="dropdown-toggle">Asistencias <i class="fas fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="../asistencias/consulta.html" id="consultaAsistencias">Consultar Asistencias</a>
+                        <a href="../asistencias/registrar.html" id="registrarAsistencias">Registrar Asistencias</a>
                     </div>
-
-                    <div class="contenedor-cmb">
-                        <select id="cmbGrupo" name="cmbGrupos" title="Grupos">
-                            <option>Grupo</option>
-                        </select>
-
-                        <select id="cmbMateria" name="cmbMaterias" title="Materias">
-                            <option>Materia</option>
-                        </select>
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaInicio">Fecha de inicio</label>
-                        <input type="date" id="dpFechaInicio" title="Fecha de inicio">
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaFin">Fecha fin</label>
-                        <input type="date" id="dpFechaFin" title="Fecha fin">
-                    </div>
-
                 </div>
-
-                <div class="contenedor-tabla">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Alumno</th>
-                                <th>Lunes: 5:10</th>
-                                <th>Lunes: 6:00</th>
-                                <th>Martes: 6:50</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Nombre del alumno 1</td>
-                                <td>J</td>
-                                <td>F</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 2</td>
-                                <td>F</td>
-                                <td>R</td>
-                                <td>J</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 3</td>
-                                <td>A</td>
-                                <td>J</td>
-                                <td>F</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <a href="../reportes/generarReporte.html" id="reportesLink">Reportes</a>
+                <a href="../listas/listas.html" id="listasLink">Listas</a>
+                <a href="#" class="ultimo-item" onclick="cerrarSesion();">Cerrar Sesión <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
 
-        <div class="slide">
-            <h2 class="titulo-secundario">Semana 2</h2>
-            <div class="contenedor">
-                <div class="contenedor-opciones">
-                    <div class="input-container">
-                        <input type="search" placeholder="Buscar alumno" id="txtBuscar" />
-                        <i class="fas fa-search"></i>
-                    </div>
+        <h1 class="titulo">Consulta de asistencia</h1>
 
-                    <div class="contenedor-cmb">
-                        <select id="cmbGrupo" name="cmbGrupos" title="Grupos">
-                            <option>Grupo</option>
-                        </select>
 
-                        <select id="cmbMateria" name="cmbMaterias" title="Materias">
-                            <option>Materia</option>
-                        </select>
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaInicio">Fecha de inicio</label>
-                        <input type="date" id="dpFechaInicio" title="Fecha de inicio">
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaFin">Fecha fin</label>
-                        <input type="date" id="dpFechaFin" title="Fecha fin">
-                    </div>
-
+        <h2 class="titulo-secundario" id="tituloSemana">Semana 1</h2>
+        <h3 class="titulo-secundario" id="tituloParcial">Parcial 1</h3>
+        <div class="contenedor">
+            <button class="boton-izquierdo" id="btnSemanaAnterior">
+                <i class="fas fa-chevron-left"></i> <!-- Ícono de Font Awesome para la flecha izquierda -->
+            </button>
+            <div class="contenedor-opciones">
+                <div class="input-container">
+                    <input type="search" placeholder="Buscar alumno" id="txtBuscar" />
+                    <i class="fas fa-search"></i>
                 </div>
 
-                <div class="contenedor-tabla">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Alumno</th>
-                                <th>Lunes: 5:10</th>
-                                <th>Lunes: 6:00</th>
-                                <th>Martes: 6:50</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Nombre del alumno 1</td>
-                                <td>J</td>
-                                <td>F</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 2</td>
-                                <td>F</td>
-                                <td>R</td>
-                                <td>J</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 3</td>
-                                <td>A</td>
-                                <td>J</td>
-                                <td>F</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="contenedor-cmb">
+                    <select id="cmbGrupo" name="cmbGrupo" title="Grupos">
+                        <option value="" disabled selected>Grupo</option>
+                    </select>
+
+                    <select id="cmbMateria" name="cmbMateria" title="Materias">
+                        <option value="" disabled selected="">Materia</option>
+                    </select>
                 </div>
+
+                <div class="contenedor-fecha">
+                    <label for="fechaInicio">Fecha de inicio</label>
+                    <input type="date" id="dpFechaInicio" onchange="filtrarPorFechas();" title="Fecha de inicio">
+                </div>
+
+                <div class="contenedor-fecha">
+                    <label for="fechaFin">Fecha fin</label>
+                    <input type="date" id="dpFechaFin" onchange="filtrarPorFechas();" title="Fecha fin">
+                </div>
+
             </div>
-        </div>
-        <div class="slide">
-            <h2 class="titulo-secundario">Semana 3</h2>
-            <div class="contenedor">
-                <div class="contenedor-opciones">
-                    <div class="input-container">
-                        <input type="search" placeholder="Buscar alumno" id="txtBuscar" />
-                        <i class="fas fa-search"></i>
-                    </div>
 
-                    <div class="contenedor-cmb">
-                        <select id="cmbGrupo" name="cmbGrupos" title="Grupos">
-                            <option>Grupo</option>
-                        </select>
+            <div class="contenedor-tabla">
+                <table id="tablaAlumnos">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Materia</th>
+                            <th>Dia</th>
+                            <th>Hora</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblAlumnos">
 
-                        <select id="cmbMateria" name="cmbMaterias" title="Materias">
-                            <option>Materia</option>
-                        </select>
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaInicio">Fecha de inicio</label>
-                        <input type="date" id="dpFechaInicio" title="Fecha de inicio">
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaFin">Fecha fin</label>
-                        <input type="date" id="dpFechaFin" title="Fecha fin">
-                    </div>
-
-                </div>
-
-                <div class="contenedor-tabla">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Alumno</th>
-                                <th>Lunes: 5:10</th>
-                                <th>Lunes: 6:00</th>
-                                <th>Martes: 6:50</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Nombre del alumno 1</td>
-                                <td>J</td>
-                                <td>F</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 2</td>
-                                <td>F</td>
-                                <td>R</td>
-                                <td>J</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 3</td>
-                                <td>A</td>
-                                <td>J</td>
-                                <td>F</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
+            <button class="boton-derecho" id="btnSemanaPosterior">
+                <i class="fas fa-chevron-right"></i> <!-- Ícono de Font Awesome para la flecha derecha -->
+            </button>
         </div>
-        <div class="slide">
-            <h2 class="titulo-secundario">Semana 4</h2>
-            <div class="contenedor">
-                <div class="contenedor-opciones">
-                    <div class="input-container">
-                        <input type="search" placeholder="Buscar alumno" id="txtBuscar" />
-                        <i class="fas fa-search"></i>
-                    </div>
 
-                    <div class="contenedor-cmb">
-                        <select id="cmbGrupo" name="cmbGrupos" title="Grupos">
-                            <option>Grupo</option>
-                        </select>
-
-                        <select id="cmbMateria" name="cmbMaterias" title="Materias">
-                            <option>Materia</option>
-                        </select>
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaInicio">Fecha de inicio</label>
-                        <input type="date" id="dpFechaInicio" title="Fecha de inicio">
-                    </div>
-
-                    <div class="contenedor-fecha">
-                        <label for="fechaFin">Fecha fin</label>
-                        <input type="date" id="dpFechaFin" title="Fecha fin">
-                    </div>
-
-                </div>
-
-                <div class="contenedor-tabla">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Alumno</th>
-                                <th>Lunes: 5:10</th>
-                                <th>Lunes: 6:00</th>
-                                <th>Martes: 6:50</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Nombre del alumno 1</td>
-                                <td>J</td>
-                                <td>F</td>
-                                <td>A</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 2</td>
-                                <td>F</td>
-                                <td>R</td>
-                                <td>J</td>
-                            </tr>
-                            <tr>
-                                <td>Nombre del alumno 3</td>
-                                <td>A</td>
-                                <td>J</td>
-                                <td>F</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/script.js"></script>
-    <script src="js/consulta.js"></script>
-</body>
+        <script src="js/script.js"></script>
+        <script src="js/consulta.js"></script>
+    </body>
 
 </html>

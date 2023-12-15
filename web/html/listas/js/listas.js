@@ -97,13 +97,7 @@ function llenarCmbDocente(data) {
 }
 
 function saveAlumnosExcel() {
-    console.log("*********GUARDAR ALUMNOS******************");
     alumnosExcel.forEach(alumno => {
-        //obtenerUltimoIdUsuario
-        //saveUsuario con usuarioUltimoIdUsuario + 1 y password 1234
-        //el insert devuelve idUsuario
-        //hacer lo mismo con grupo
-
         let fechaNacimiento = alumno.fechaNacimiento;
         if (fechaNacimiento == "\r") {
             fechaNacimiento = "0000-00-00";
@@ -125,7 +119,7 @@ function saveAlumnosExcel() {
         };
 
         params = new URLSearchParams(datos);
-        fetch("../../api/listaAsistencia/update?",
+        fetch("../../api/Alumno/save?",
                 {
                     method: "POST",
                     headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -135,7 +129,7 @@ function saveAlumnosExcel() {
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log("success");
+                    console.log("se guardo alumno success");
                 })
                 .catch(error => {
                     console.error('Error:', error);

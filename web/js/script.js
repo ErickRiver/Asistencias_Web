@@ -46,6 +46,6 @@ function validarSesion() {
 function cerrarSesion() {
     localStorage.removeItem('idUsuario');
     localStorage.removeItem('rol');
-
+   
     window.location.href = 'login.html';
 }

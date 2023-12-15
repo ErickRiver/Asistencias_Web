@@ -44,7 +44,7 @@ body {
 .titulo-secundario {
     text-align: center;
     margin: 0 auto;
-    margin-top: 30px;
+    margin-top: 20px;
     max-width: 500px;
 }
 
@@ -285,12 +285,13 @@ select {
 
 .contenedor-tabla {
     width: 100%;
+    padding: 20px;
+    margin: 20px;
 }
 
 .contenedor-tabla table {
     width: 100%;
     border-collapse: collapse;
-    overflow: scroll;
 }
 
 table select {
@@ -352,6 +353,37 @@ table select {
 [transition-style="in:circle:center"] {
     animation: 2.5s cubic-bezier(.25, 1, .30, 1) circle-in-center both;
 }
+
+.boton-izquierdo,
+.boton-derecho {
+    border: 2px solid black;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: var(--clr-blanco2);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 20px;
+    z-index: 20;
+}
+
+.boton-izquierdo {
+    left: 15px; /* Ajusta la posición del botón izquierdo según sea necesario */
+}
+
+.boton-derecho {
+    right: 15px; /* Ajusta la posición del botón derecho según sea necesario */
+}
+
+.animated.slideInRight {
+    animation-duration: 0.5s;
+}
+
+.animated.slideInLeft {
+    animation-duration: 0.5s;
+}
+
 
 @media screen and (max-width: 500px) {
     .contenedor-fecha {
@@ -566,41 +598,4 @@ table select {
         min-width: 100px;
         width: 60%;
     }
-}
-
-.slider {
-    width: 80%;
-    margin: 0 auto;
-}
-
-.slide {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.slick-prev,
-.slick-next {
-    position: absolute;
-    top: 50%;
-    z-index: 1;
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    border: 2px solid black;
-    background-color: var(--clr-blanco2);
-    cursor: pointer;
-}
-
-.slick-prev {
-    left: 0px;
-}
-
-.slick-next {
-    right: 0px;
-}
-
-.slick-slider .slick-dots {
-    display: none !important;
 }

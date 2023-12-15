@@ -629,29 +629,29 @@ function saveAsistencia() {
         title: 'Registrar nueva asistencia',
         html:
                 '<p>Semana ' + semana + '</p>' +
-                '<div class="contenedor-cmb" style="display: flex; flex-direction: column;">' +
-                '<select id="cmbAlumnos" name="cmbAlumnos" title="cmbAlumnos">' +
+                '<div class="contenedor-cmb" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">' +
+                '<select id="cmbAlumnos" name="cmbAlumnos" title="cmbAlumnos" style="border: none; border-bottom: 1px solid black; outline: none; max-width: 250px; width: 100%; height: 30px;">' +
                 '<option value="" disabled selected>Alumno</option>' +
                 '</select>' +
                 '</div>' +
-                '<div class="contenedor-cmb" style="display: flex; flex-direction: column; margin-block: 20px;">' +
-                '<select id="cmbDocente" name="cmbDocente" title="cmbDocente">' +
+                '<div class="contenedor-cmb" style="display: flex; flex-direction: column; margin-block: 20px; justify-content: center; align-items: center;">' +
+                '<select id="cmbDocente" name="cmbDocente" title="cmbDocente" style="border: none; border-bottom: 1px solid black; outline: none; max-width: 250px; width: 100%; height: 30px;">' +
                 '<option value="" disabled selected>Docente</option>' +
                 '</select>' +
-                '<select id="cmbMateria2" name="cmbMateria2" title="Materias2">' +
+                '<select id="cmbMateria2" name="cmbMateria2" title="Materias2" style="border: none; border-bottom: 1px solid black; outline: none; max-width: 250px; width: 100%; height: 30px;">' +
                 '<option value="" disabled selected>Materia</option>' +
                 '</select>' +
                 '</div>' +
                 '<div class="contenedor-fecha">' +
                 '<label for="dpFechaAsistencia">Fecha de asistencia</label>' +
-                '<input type="date" id="dpFechaAsistencia" title="Fecha de asistencia">' +
+                '<input type="date" id="dpFechaAsistencia" title="Fecha de asistencia" style="border: none; border-bottom: 1px solid black; outline: none; max-width: 250px; width: 100%; height: 30px;">' +
                 '<div class="contenedor-hora" style="display: flex; flex-direction: column; margin-block: 20px;">' +
                 '<label for="dpHoraAsistencia">Hora</label>' +
-                '<input type="time" id="dpHoraAsistencia" title="dpHoraAsistencia">' +
+                '<input type="time" id="dpHoraAsistencia" title="dpHoraAsistencia" style="border: none; border-bottom: 1px solid black; outline: none; max-width: 250px; width: 100%; height: 30px;">' +
                 '</div>' +
-                '<div class="contenedor-cmb"  style="display: flex; flex-direction: column; margin-block: 10px;">' +
+                '<div class="contenedor-cmb" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">' +
                 '<label for="hora">Asistencia</label>' +
-                '<select id="selectAsistencia">' +
+                '<select id="selectAsistencia" style="border: none; border-bottom: 1px solid black; outline: none; max-width: 250px; width: 100%; height: 30px;">' +
                 '<option value="A">Asistió</option>' +
                 '<option value="F">Falta</option>' +
                 '<option value="R">Retardo</option>' +
@@ -665,6 +665,7 @@ function saveAsistencia() {
             // Aquí se ejecuta después de que se abre el modal
             const select = document.getElementById('cmbAlumnos');
             const inputBuscar = document.createElement('input');
+           
             inputBuscar.setAttribute('type', 'text');
             inputBuscar.setAttribute('placeholder', 'Buscar alumno');
             inputBuscar.addEventListener('input', function (event) {

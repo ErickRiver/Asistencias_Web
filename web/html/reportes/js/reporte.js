@@ -20,8 +20,19 @@ function inicializar() {
 const cmbAlumnos = document.getElementById('cmbAlumnos');
 cmbAlumnos.onchange = function () {
     idAlumno = this.value;
-
+    cambiarListaFiltro();
 };
+
+function cambiarListaFiltro() {
+    var listaFiltro2 = [];
+    listaFiltro.forEach(lista => {
+        if (lista.alumno.idAlumno == idAlumno) {
+            listaFiltro2.push(lista);
+        }
+    });
+    
+    llenarTablaAlumnos(listaFiltro2);
+}
 
 const cmbGrupo = document.getElementById('cmbGrupo');
 cmbGrupo.onchange = function () {
@@ -34,7 +45,7 @@ const cmbMateria = document.getElementById('cmbMateria');
 cmbMateria.onchange = function () {
     idMateria = this.value;
     filtrarPorMateria();
-    llenarCmbAlumnos();
+    //llenarCmbAlumnos();
 };
 
 function getAllAlumnos() {
@@ -57,9 +68,6 @@ function getAllAlumnos() {
 }
 
 function llenarCmbAlumnos() {
-    console.log("***************alumnos***********")
-    console.log(listaAlumnos);
-
     const select = document.getElementById('cmbAlumnos');
     select.innerHTML = '';
 
@@ -69,6 +77,7 @@ function llenarCmbAlumnos() {
     option.disabled = true;
     option.selected = true;
 
+    console.log(listaFiltro);
     select.appendChild(option);
 
     listaAlumnos.forEach(lista => {
@@ -186,7 +195,7 @@ function llenarTablaAlumnos(data) {
     if (data.length === 0) {
         registroAlumno =
                 '<tr>' +
-                '<td colspan="4" style="text-align: center;">No hay registros</td>' +
+                '<td colspan="5" style="text-align: center;">No hay registros</td>' +
                 '<td hidden></td>' +
                 '<td hidden></td>' +
                 '<td hidden></td>' +
@@ -323,7 +332,8 @@ function filtrarPorFechas() {
                 }
             });
         }
-
+        
+        console.log("listafiltro************************++")
         llenarTablaAlumnos(listaFiltro);
     }
 }
